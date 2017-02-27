@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Ryzii74/quatro#readme",
   "dependencies": {
+    "async": "^2.1.5",
     "express": "^4.14.1",
     "socket.io": "^1.7.3"
   }
