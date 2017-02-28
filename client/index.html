@@ -3,12 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/gameField.css">
+    <link rel="stylesheet" href="./css/movesList.css">
 </head>
 <body>
-    <h1>Hello World!</h1>
+    <div id="gameField">
+        <table id="field">
+            <tr class="row" v-for="row, rowIndex in field">
+                <td class="item"
+                    v-for="item, itemIndex in row"
+                    v-on:click="makeMove(rowIndex, itemIndex)">{{item}}</td>
+            </tr>
+        </table>
 
+        <table id="moves">
+            <tr class="row" v-for="row, rowIndex in moves">
+                <td class="item"
+                    v-for="item, itemIndex in row"
+                    v-on:click="selectMove(rowIndex, itemIndex)">{{item}}</td>
+            </tr>
+        </table>
+    </div>
 
+    <script src="https://unpkg.com/vue"></script>
     <script src="https://cdn-orig.socket.io/socket.io-1.7.3.js"></script>
     <script src="./javascript/logic.js"></script>
+    <script src="./javascript/components/gameField.js"></script>
+    <script src="./javascript/components/movesList.js"></script>
 </body>
 </html>
