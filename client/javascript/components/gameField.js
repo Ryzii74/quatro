@@ -1,5 +1,45 @@
-var gameField = new Vue({
-    el: '#gameField',
+var gameField = {
+    template: `
+        <div id="gameField">
+            <h1>{{getTurnHeader()}}</h1>
+            <table id="field">
+                <tr class="row" v-for="row, rowIndex in field">
+                    <td v-for="item, itemIndex in row"
+                        v-on:click="makeMove(rowIndex, itemIndex)">
+                        <div class="item"
+                             v-bind:class="[
+                                (item && item.isRed) ? 'red' : 'green',
+                                (item && item.isCircle) ? 'circle' : '',
+                                (item && item.isBig) ? 'big' : '',
+                                (!item) ? 'empty' : ''
+                             ]">
+                            <div class="item-inner"
+                                 v-bind:class="(item && item.isEmpty) ? 'empty' : ''"></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <table id="moves">
+                <tr class="row" v-for="row, rowIndex in moves">
+                    <td v-for="item, itemIndex in row"
+                        v-on:click="selectMove(rowIndex, itemIndex)"
+                        v-bind:class="(isItemSelected(rowIndex, itemIndex)) ? 'selected' : ''">
+                        <div class="item"
+                             v-bind:class="[
+                                (item && item.isRed) ? 'red' : 'green',
+                                (item && item.isCircle) ? 'circle' : '',
+                                (item && item.isBig) ? 'big' : '',
+                                (!item) ? 'empty' : ''
+                             ]">
+                            <div class="item-inner"
+                                 v-bind:class="(item && item.isEmpty) ? 'empty' : ''"></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    `,
     data: {
         field: [
             [null, null, null, null],
@@ -186,7 +226,7 @@ var gameField = new Vue({
             this.isGameEnded = isGameEnded;
         }
     }
-});
+};
 
 const PROPS = [ 'isRed', 'isBig', 'isEmpty', 'isCircle' ];
 
