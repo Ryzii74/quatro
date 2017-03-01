@@ -1,7 +1,7 @@
-var socket = io();
+const socket = io();
 socket.connect('http://127.0.0.1:3000');
 
-socket.on('connect',function() {
+socket.on('connect', () => {
     console.log('Client has connected to the server!');
 });
 

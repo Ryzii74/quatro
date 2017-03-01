@@ -1,3 +1,3 @@
-var mainPage = {
+const mainPage = {
     template: '<h1>Привет</h1>'
 };

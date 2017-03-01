@@ -8,6 +8,6 @@ const router = new VueRouter({
     routes // сокращение от routes: routes
 });
 
-const app = new Vue({
+new Vue({
     router
 }).$mount('#app');
