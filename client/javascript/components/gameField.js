@@ -40,123 +40,125 @@ var gameField = {
             </table>
         </div>
     `,
-    data: {
-        field: [
-            [null, null, null, null],
-            [null, null, null, null],
-            [null, null, null, null],
-            [null, null, null, null]
-        ],
-        moves: [
-            [
-                {
-                    isRed: true,
-                    isCircle: true,
-                    isBig: true,
-                    isEmpty: true
-                },
-                {
-                    isRed: true,
-                    isCircle: true,
-                    isBig: true,
-                    isEmpty: false
-                },
-                {
-                    isRed: true,
-                    isCircle: true,
-                    isBig: false,
-                    isEmpty: true
-                },
-                {
-                    isRed: true,
-                    isCircle: false,
-                    isBig: true,
-                    isEmpty: true
-                }
+    data() {
+        return {
+            field: [
+                [null, null, null, null],
+                [null, null, null, null],
+                [null, null, null, null],
+                [null, null, null, null]
             ],
-            [
-                {
-                    isRed: false,
-                    isCircle: true,
-                    isBig: true,
-                    isEmpty: true
-                },
-                {
-                    isRed: false,
-                    isCircle: false,
-                    isBig: true,
-                    isEmpty: true
-                },
-                {
-                    isRed: false,
-                    isCircle: true,
-                    isBig: false,
-                    isEmpty: true
-                },
-                {
-                    isRed: false,
-                    isCircle: true,
-                    isBig: true,
-                    isEmpty: false
-                }
+            moves: [
+                [
+                    {
+                        isRed: true,
+                        isCircle: true,
+                        isBig: true,
+                        isEmpty: true
+                    },
+                    {
+                        isRed: true,
+                        isCircle: true,
+                        isBig: true,
+                        isEmpty: false
+                    },
+                    {
+                        isRed: true,
+                        isCircle: true,
+                        isBig: false,
+                        isEmpty: true
+                    },
+                    {
+                        isRed: true,
+                        isCircle: false,
+                        isBig: true,
+                        isEmpty: true
+                    }
+                ],
+                [
+                    {
+                        isRed: false,
+                        isCircle: true,
+                        isBig: true,
+                        isEmpty: true
+                    },
+                    {
+                        isRed: false,
+                        isCircle: false,
+                        isBig: true,
+                        isEmpty: true
+                    },
+                    {
+                        isRed: false,
+                        isCircle: true,
+                        isBig: false,
+                        isEmpty: true
+                    },
+                    {
+                        isRed: false,
+                        isCircle: true,
+                        isBig: true,
+                        isEmpty: false
+                    }
+                ],
+                [
+                    {
+                        isRed: true,
+                        isCircle: false,
+                        isBig: false,
+                        isEmpty: true
+                    },
+                    {
+                        isRed: true,
+                        isCircle: true,
+                        isBig: false,
+                        isEmpty: false
+                    },
+                    {
+                        isRed: true,
+                        isCircle: false,
+                        isBig: true,
+                        isEmpty: false
+                    },
+                    {
+                        isRed: false,
+                        isCircle: false,
+                        isBig: false,
+                        isEmpty: false
+                    }
+                ],
+                [
+                    {
+                        isRed: true,
+                        isCircle: false,
+                        isBig: false,
+                        isEmpty: false
+                    },
+                    {
+                        isRed: false,
+                        isCircle: true,
+                        isBig: false,
+                        isEmpty: false
+                    },
+                    {
+                        isRed: false,
+                        isCircle: false,
+                        isBig: true,
+                        isEmpty: false
+                    },
+                    {
+                        isRed: false,
+                        isCircle: false,
+                        isBig: false,
+                        isEmpty: true
+                    }
+                ]
             ],
-            [
-                {
-                    isRed: true,
-                    isCircle: false,
-                    isBig: false,
-                    isEmpty: true
-                },
-                {
-                    isRed: true,
-                    isCircle: true,
-                    isBig: false,
-                    isEmpty: false
-                },
-                {
-                    isRed: true,
-                    isCircle: false,
-                    isBig: true,
-                    isEmpty: false
-                },
-                {
-                    isRed: false,
-                    isCircle: false,
-                    isBig: false,
-                    isEmpty: false
-                }
-            ],
-            [
-                {
-                    isRed: true,
-                    isCircle: false,
-                    isBig: false,
-                    isEmpty: false
-                },
-                {
-                    isRed: false,
-                    isCircle: true,
-                    isBig: false,
-                    isEmpty: false
-                },
-                {
-                    isRed: false,
-                    isCircle: false,
-                    isBig: true,
-                    isEmpty: false
-                },
-                {
-                    isRed: false,
-                    isCircle: false,
-                    isBig: false,
-                    isEmpty: true
-                }
-            ]
-        ],
-        yourTurn: true,
-        selectedMove: null,
-        isGameEnded: false,
-        isGameWined: false
+            yourTurn: true,
+            selectedMove: null,
+            isGameEnded: false,
+            isGameWined: false
+        }
     },
     methods: {
         selectMove: function (rowIndex, itemIndex) {
