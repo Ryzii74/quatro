@@ -1,5 +1,5 @@
 const MainPage = require('../components/mainPage.vue');
-const GameField = require('../components/gameField');
+const GameField = require('../components/gameField.vue');
 
 module.exports = {
     init() {
