@@ -1,16 +1,22 @@
-const Games = [];
+class GameOffers {
+    constructor() {
+        this.gameOffers = [];
+    }
 
-module.exports.get = (callback) => {
-    return callback(Games);
-};
+    get(type) {
+        return this.gameOffers.filter(game => game.type === type);
+    }
 
-module.exports.add = (gameData) => {
-    Games.push(gameData);
-};
+    add(gameData) {
+        this.gameOffers.push(gameData);
+    }
 
-module.exports.remove = (gameAuthor) => {
-    var gameIndex = Games.findIndex(game => game.author === gameAuthor);
-    if (gameIndex === -1) return;
+    remove(gameAuthor) {
+        var gameIndex = this.gameOffers.findIndex(game => game.author === gameAuthor);
+        if (gameIndex === -1) return;
 
-    Games.splice(gameIndex, 1);
-};
+        Games.splice(gameIndex, 1);
+    }
+}
+
+module.exports = new GameOffers();

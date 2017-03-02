@@ -1,13 +1,17 @@
-const routes = [
-    { path: '/', component: mainPage },
-    { path: '/game', component: gameField }
-];
+APP.Router = {
+    init() {
+        const routes = [
+            { path: '/', component: mainPage },
+            { path: '/game', component: gameField }
+        ];
 
-const router = new VueRouter({
-    mode: 'history',
-    routes // сокращение от routes: routes
-});
+        const router = new VueRouter({
+            mode: 'history',
+            routes // сокращение от routes: routes
+        });
 
-new Vue({
-    router
-}).$mount('#app');
+        new Vue({
+            router
+        }).$mount('#app');
+    }
+};
