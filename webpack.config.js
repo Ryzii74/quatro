@@ -7,7 +7,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.[js,vue]$/,
+                test: /\.(js|vue)$/,
                 enforce: 'pre',
 
                 loader: 'eslint-loader',

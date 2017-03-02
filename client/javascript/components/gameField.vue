@@ -1,3 +1,11 @@
+<template lang="jade">
+
+</template>
+
+<script>
+</script>
+
+
 const PROPS = ['isRed', 'isBig', 'isEmpty', 'isCircle'];
 const LINES = [
     [
