@@ -1,5 +1,3 @@
-const APP = {};
-
 class Connection {
     constructor() {
         this.socket = io();
@@ -22,4 +20,4 @@ class Connection {
     }
 }
 
-APP.Connection = new Connection();
+module.exports = new Connection();

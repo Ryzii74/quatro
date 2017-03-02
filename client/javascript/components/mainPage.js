@@ -1,7 +1,9 @@
-const mainPage = {
+const Connection = require('../libs/connection');
+
+module.exports = {
     template: '<h1>Привет</h1>',
     created() {
-        APP.Connection.send("getGameOffers", {}, (err, data) => {
+        Connection.send("getGameOffers", {}, (err, data) => {
             console.log(data);
         });
     }

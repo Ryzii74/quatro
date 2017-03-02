@@ -182,7 +182,7 @@ const LINES = [
     ]
 ];
 
-const gameField = {
+module.exports = {
     template: `
         <div id="gameField">
             <h1>{{getTurnHeader()}}</h1>

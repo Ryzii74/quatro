@@ -1,8 +1,11 @@
-APP.Router = {
+const MainPage = require('../components/mainPage');
+const GameField = require('../components/gameField');
+
+module.exports = {
     init() {
         const routes = [
-            { path: '/', component: mainPage },
-            { path: '/game', component: gameField }
+            { path: '/', component: MainPage },
+            { path: '/game', component: GameField }
         ];
 
         const router = new VueRouter({
