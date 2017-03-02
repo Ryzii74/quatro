@@ -1,7 +1,7 @@
 const GameOffers = require('../libs/gamesOfferManager');
 
 module.exports = socket => {
-    socket.on('getGameOffers', ({type}, callback) => {
+    socket.on('getGameOffers', ({ type }, callback) => {
         callback({
             success: true,
             data: {

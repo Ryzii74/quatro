@@ -12,10 +12,10 @@ class GameOffers {
     }
 
     remove(gameAuthor) {
-        var gameIndex = this.gameOffers.findIndex(game => game.author === gameAuthor);
+        const gameIndex = this.gameOffers.findIndex(game => game.author === gameAuthor);
         if (gameIndex === -1) return;
 
-        Games.splice(gameIndex, 1);
+        this.gameOffers.splice(gameIndex, 1);
     }
 }
 
