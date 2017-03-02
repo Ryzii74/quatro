@@ -1,4 +1,4 @@
-const MainPage = require('../components/mainPage');
+const MainPage = require('../components/mainPage.vue');
 const GameField = require('../components/gameField');
 
 module.exports = {
