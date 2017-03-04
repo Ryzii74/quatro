@@ -12,22 +12,12 @@ div#gameField
                             (!item) ? 'empty' : ''
                          ]`)
                     div.item-inner(v-bind:class="(item && item.isEmpty) ? 'empty' : ''")
-
-    table#moves
-        tr.row(v-for="row, rowIndex in moves")
-            td(v-for="item, itemIndex in row",
-                v-on:click="selectMove(rowIndex, itemIndex)",
-                v-bind:class="(isItemSelected(rowIndex, itemIndex)) ? 'selected' : ''")
-                div.item(v-bind:class=`[
-                            (item && item.isRed) ? 'red' : 'green',
-                            (item && item.isCircle) ? 'circle' : '',
-                            (item && item.isBig) ? 'big' : '',
-                            (!item) ? 'empty' : ''
-                         ]`)
-                    div.item-inner(v-bind:class="(item && item.isEmpty) ? 'empty' : ''")
+    moves
 </template>
 
 <script>
+    const gameMoves = require('./moves.vue');
+
     const PROPS = ['isRed', 'isBig', 'isEmpty', 'isCircle'];
     const LINES = [
         [
@@ -213,6 +203,9 @@ div#gameField
     ];
 
     module.exports = {
+        components: {
+            moves: gameMoves
+        },
         data() {
             return {
                 field: [
@@ -221,142 +214,22 @@ div#gameField
                     [null, null, null, null],
                     [null, null, null, null]
                 ],
-                moves: [
-                    [
-                        {
-                            isRed: true,
-                            isCircle: true,
-                            isBig: true,
-                            isEmpty: true
-                        },
-                        {
-                            isRed: true,
-                            isCircle: true,
-                            isBig: true,
-                            isEmpty: false
-                        },
-                        {
-                            isRed: true,
-                            isCircle: true,
-                            isBig: false,
-                            isEmpty: true
-                        },
-                        {
-                            isRed: true,
-                            isCircle: false,
-                            isBig: true,
-                            isEmpty: true
-                        }
-                    ],
-                    [
-                        {
-                            isRed: false,
-                            isCircle: true,
-                            isBig: true,
-                            isEmpty: true
-                        },
-                        {
-                            isRed: false,
-                            isCircle: false,
-                            isBig: true,
-                            isEmpty: true
-                        },
-                        {
-                            isRed: false,
-                            isCircle: true,
-                            isBig: false,
-                            isEmpty: true
-                        },
-                        {
-                            isRed: false,
-                            isCircle: true,
-                            isBig: true,
-                            isEmpty: false
-                        }
-                    ],
-                    [
-                        {
-                            isRed: true,
-                            isCircle: false,
-                            isBig: false,
-                            isEmpty: true
-                        },
-                        {
-                            isRed: true,
-                            isCircle: true,
-                            isBig: false,
-                            isEmpty: false
-                        },
-                        {
-                            isRed: true,
-                            isCircle: false,
-                            isBig: true,
-                            isEmpty: false
-                        },
-                        {
-                            isRed: false,
-                            isCircle: false,
-                            isBig: false,
-                            isEmpty: false
-                        }
-                    ],
-                    [
-                        {
-                            isRed: true,
-                            isCircle: false,
-                            isBig: false,
-                            isEmpty: false
-                        },
-                        {
-                            isRed: false,
-                            isCircle: true,
-                            isBig: false,
-                            isEmpty: false
-                        },
-                        {
-                            isRed: false,
-                            isCircle: false,
-                            isBig: true,
-                            isEmpty: false
-                        },
-                        {
-                            isRed: false,
-                            isCircle: false,
-                            isBig: false,
-                            isEmpty: true
-                        }
-                    ]
-                ],
                 yourTurn: true,
-                selectedMove: null,
                 isGameEnded: false,
                 isGameWined: false
             };
         },
         methods: {
-            selectMove(rowIndex, itemIndex) {
-                if (this.isGameWined || this.isGameEnded) return;
-                if (this.moves[rowIndex][itemIndex] === null) return;
-
-                this.selectedMove = {};
-                this.selectedMove.x = rowIndex;
-                this.selectedMove.y = itemIndex;
-            },
             makeMove(rowIndex, itemIndex) {
                 if (!this.selectedMove) return;
-                this.field[rowIndex][itemIndex] = this.moves[this.selectedMove.x][this.selectedMove.y];
-                this.moves[this.selectedMove.x][this.selectedMove.y] = null;
-                this.selectedMove = null;
+
+                this.field[rowIndex][itemIndex] = this.selectedMove;
+                this.store.commit('clearSelectedMove');
 
                 this.checkIsGameWined();
                 this.checkIsGameEnded();
 
                 this.yourTurn = !this.yourTurn;
-            },
-            isItemSelected(rowIndex, itemIndex) {
-                return this.selectedMove
-                        && this.selectedMove.x === rowIndex
-                        && this.selectedMove.y === itemIndex;
             },
             getTurnHeader() {
                 if (this.isGameEnded) return 'Игра окончена!';
