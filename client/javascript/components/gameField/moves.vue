@@ -18,120 +18,13 @@
 <script>
     module.exports = {
         computed: Vuex.mapState({
-            selectedMove(game) {
-                return game.selectedMove;
+            selectedMove(state) {
+                return state.game.selectedMove;
+            },
+            moves(state) {
+                return state.game.moves;
             }
         }),
-        data() {
-            return {
-                moves: [
-                    [
-                        {
-                            isRed: true,
-                            isCircle: true,
-                            isBig: true,
-                            isEmpty: true
-                        },
-                        {
-                            isRed: true,
-                            isCircle: true,
-                            isBig: true,
-                            isEmpty: false
-                        },
-                        {
-                            isRed: true,
-                            isCircle: true,
-                            isBig: false,
-                            isEmpty: true
-                        },
-                        {
-                            isRed: true,
-                            isCircle: false,
-                            isBig: true,
-                            isEmpty: true
-                        }
-                    ],
-                    [
-                        {
-                            isRed: false,
-                            isCircle: true,
-                            isBig: true,
-                            isEmpty: true
-                        },
-                        {
-                            isRed: false,
-                            isCircle: false,
-                            isBig: true,
-                            isEmpty: true
-                        },
-                        {
-                            isRed: false,
-                            isCircle: true,
-                            isBig: false,
-                            isEmpty: true
-                        },
-                        {
-                            isRed: false,
-                            isCircle: true,
-                            isBig: true,
-                            isEmpty: false
-                        }
-                    ],
-                    [
-                        {
-                            isRed: true,
-                            isCircle: false,
-                            isBig: false,
-                            isEmpty: true
-                        },
-                        {
-                            isRed: true,
-                            isCircle: true,
-                            isBig: false,
-                            isEmpty: false
-                        },
-                        {
-                            isRed: true,
-                            isCircle: false,
-                            isBig: true,
-                            isEmpty: false
-                        },
-                        {
-                            isRed: false,
-                            isCircle: false,
-                            isBig: false,
-                            isEmpty: false
-                        }
-                    ],
-                    [
-                        {
-                            isRed: true,
-                            isCircle: false,
-                            isBig: false,
-                            isEmpty: false
-                        },
-                        {
-                            isRed: false,
-                            isCircle: true,
-                            isBig: false,
-                            isEmpty: false
-                        },
-                        {
-                            isRed: false,
-                            isCircle: false,
-                            isBig: true,
-                            isEmpty: false
-                        },
-                        {
-                            isRed: false,
-                            isCircle: false,
-                            isBig: false,
-                            isEmpty: true
-                        }
-                    ]
-                ]
-            };
-        },
         methods: {
             isItemSelected(rowIndex, itemIndex) {
                 return this.selectedMove
@@ -141,7 +34,7 @@
             selectMove(rowIndex, itemIndex) {
                 if (this.moves[rowIndex][itemIndex] === null) return;
 
-                this.$store.commit('game/selectMove', {
+                this.$store.commit('selectMove', {
                     x: rowIndex,
                     y: itemIndex
                 });

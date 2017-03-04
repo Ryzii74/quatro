@@ -206,19 +206,19 @@ div#gameField
         components: {
             moves: gameMoves
         },
+        created() {
+            this.$store.commit('initGame');
+        },
         computed: Vuex.mapState({
-            selectedMove(game) {
-                return game.selectedMove;
+            selectedMove(state) {
+                return state.game.selectedMove;
+            },
+            field(state) {
+                return state.game.field;
             }
         }),
         data() {
             return {
-                field: [
-                    [null, null, null, null],
-                    [null, null, null, null],
-                    [null, null, null, null],
-                    [null, null, null, null]
-                ],
                 yourTurn: true,
                 isGameEnded: false,
                 isGameWined: false
@@ -227,9 +227,11 @@ div#gameField
         methods: {
             makeMove(rowIndex, itemIndex) {
                 if (!this.selectedMove) return;
-
-                this.field[rowIndex][itemIndex] = this.selectedMove;
-                this.$store.commit('game/clearSelectedMove');
+                this.$store.commit('makeMove', {
+                    x: rowIndex,
+                    y: itemIndex
+                });
+                this.$store.commit('clearSelectedMove');
 
                 this.checkIsGameWined();
                 this.checkIsGameEnded();
