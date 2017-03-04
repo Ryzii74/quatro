@@ -1,3 +1,5 @@
+Vue.use(Vuex);
+
 const Connection = require('./libs/connection');
 const Router = require('./libs/router');
 

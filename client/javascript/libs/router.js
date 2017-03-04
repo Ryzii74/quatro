@@ -1,5 +1,6 @@
 const MainPage = require('../components/mainPage.vue');
 const GameField = require('../components/gameField/index.vue');
+const store = require('../stores/index.js');
 
 module.exports = {
     init() {
@@ -9,11 +10,12 @@ module.exports = {
         ];
 
         const router = new VueRouter({
-            mode: 'history',
+            //mode: 'history',
             routes // сокращение от routes: routes
         });
 
         new Vue({
+            store,
             router
         }).$mount('#app');
     }

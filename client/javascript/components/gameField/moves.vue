@@ -17,9 +17,13 @@
 
 <script>
     module.exports = {
+        computed: Vuex.mapState({
+            selectedMove(game) {
+                return game.selectedMove;
+            }
+        }),
         data() {
             return {
-                selectedMove: null,
                 moves: [
                     [
                         {
@@ -137,16 +141,16 @@
             selectMove(rowIndex, itemIndex) {
                 if (this.moves[rowIndex][itemIndex] === null) return;
 
-                this.selectedMove = {};
-                this.selectedMove.x = rowIndex;
-                this.selectedMove.y = itemIndex;
+                this.$store.commit('game/selectMove', {
+                    x: rowIndex,
+                    y: itemIndex
+                });
             },
             getSelectedMove() {
                 return this.moves[this.selectedMove.x][this.selectedMove.y];
             },
             clearSelectedMove() {
                 this.moves[this.selectedMove.x][this.selectedMove.y] = null;
-                this.selectedMove = null;
             }
         }
     };

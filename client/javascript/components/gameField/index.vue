@@ -206,6 +206,11 @@ div#gameField
         components: {
             moves: gameMoves
         },
+        computed: Vuex.mapState({
+            selectedMove(game) {
+                return game.selectedMove;
+            }
+        }),
         data() {
             return {
                 field: [
@@ -224,7 +229,7 @@ div#gameField
                 if (!this.selectedMove) return;
 
                 this.field[rowIndex][itemIndex] = this.selectedMove;
-                this.store.commit('clearSelectedMove');
+                this.$store.commit('game/clearSelectedMove');
 
                 this.checkIsGameWined();
                 this.checkIsGameEnded();
