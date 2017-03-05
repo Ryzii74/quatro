@@ -2,6 +2,8 @@
 div
     h1 Привет
     h2 Количество игр {{games.length}}
+
+    a(href="#", v-on:click.prevent="createGame()") Создать игру
 </template>
 
 <script>
@@ -22,7 +24,19 @@ div
             games(state) {
                 return state.main.games;
             }
-        })
+        }),
+        methods: {
+            createGame() {
+                Connection.send('createGameOffer', { type: 'test' }, (err, data) => {
+                    if (err) {
+                        console.error('error creating game', err);
+                        return;
+                    }
+
+                    this.$store.commit('initGamesList', data.games);
+                });
+            }
+        }
     };
 </script>
 

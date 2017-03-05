@@ -9,4 +9,15 @@ module.exports = socket => {
             }
         });
     });
+
+    socket.on('createGameOffer', (data, callback) => {
+        GameOffers.add(data);
+
+        callback({
+            success: true,
+            data: {
+                games: GameOffers.get(data.type)
+            }
+        });
+    });
 };
