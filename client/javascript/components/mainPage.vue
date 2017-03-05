@@ -1,5 +1,7 @@
 <template lang="jade">
-h1 Привет
+div
+    h1 Привет
+    h2 Количество игр {{games.length}}
 </template>
 
 <script>
@@ -8,9 +10,19 @@ h1 Привет
     module.exports = {
         created() {
             Connection.send('getGameOffers', {}, (err, data) => {
-                console.log(data);
+                if (err) {
+                    console.error('error getting games list', err);
+                    return;
+                }
+
+                this.$store.commit('initGamesList', data.games);
             });
-        }
+        },
+        computed: Vuex.mapState({
+            games(state) {
+                return state.main.games;
+            }
+        })
     };
 </script>
 
