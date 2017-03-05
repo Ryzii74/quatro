@@ -219,16 +219,16 @@
         methods: {
             makeMove(rowIndex, itemIndex) {
                 if (!this.selectedMove) return;
+
                 this.$store.commit('makeMove', {
                     x: rowIndex,
                     y: itemIndex
                 });
                 this.$store.commit('clearSelectedMove');
+                this.$store.commit('changeTurn');
 
                 this.checkIsGameWined();
                 this.checkIsGameEnded();
-
-                this.$store.commit('changeTurn');
             },
             checkIsGameWined() {
                 let isGameWined = false;

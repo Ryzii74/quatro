@@ -33,17 +33,11 @@
             },
             selectMove(rowIndex, itemIndex) {
                 if (this.moves[rowIndex][itemIndex] === null) return;
-
+                
                 this.$store.commit('selectMove', {
                     x: rowIndex,
                     y: itemIndex
                 });
-            },
-            getSelectedMove() {
-                return this.moves[this.selectedMove.x][this.selectedMove.y];
-            },
-            clearSelectedMove() {
-                this.moves[this.selectedMove.x][this.selectedMove.y] = null;
             }
         }
     };

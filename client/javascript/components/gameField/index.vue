@@ -18,9 +18,6 @@
             this.$store.commit('initGame');
         },
         computed: Vuex.mapState({
-            selectedMove(state) {
-                return state.game.selectedMove;
-            },
             yourTurn(state) {
                 return state.game.yourTurn;
             },
