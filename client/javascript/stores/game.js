@@ -117,14 +117,21 @@ module.exports = {
     state: {
         selectedMove: null,
         moves: null,
-        field: null
+        field: null,
+        yourTurn: null,
+        isGameEnded: null,
+        isGameWined: null
     },
 
     mutations: {
         initGame(state) {
             state.moves = Array.from(MOVES);
             state.field = Array.from(FIELD);
+            state.isGameEnded = false;
+            state.isGameWined = false;
+            state.yourTurn = true;
         },
+
         selectMove(state, data) {
             state.selectedMove = data;
         },
@@ -137,6 +144,18 @@ module.exports = {
 
         clearSelectedMove(state) {
             state.selectedMove = null;
+        },
+
+        gameWined(state) {
+            state.isGameWined = true;
+        },
+
+        gameEnded(state) {
+            state.isGameEnded = true;
+        },
+
+        changeTurn(state) {
+            state.yourTurn = !state.yourTurn;
         }
     }
 };

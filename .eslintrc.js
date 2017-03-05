@@ -21,6 +21,7 @@ module.exports = {
         "comma-dangle": ["error", "never"],
         "import/newline-after-import": 0,
         "eol-last": ["error", "never"],
+        "no-param-reassign": 0,
 
         // только на клиенте пока нет нормального импорта
         "no-unused-vars": 0,
