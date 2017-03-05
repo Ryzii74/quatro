@@ -33,7 +33,14 @@
             },
             selectMove(rowIndex, itemIndex) {
                 if (this.moves[rowIndex][itemIndex] === null) return;
-                
+                if (this.selectedMove
+                    && rowIndex === this.selectedMove.x
+                    && itemIndex === this.selectedMove.y)
+                {
+                    this.$store.commit('clearSelectedMove');
+                    return;
+                }
+
                 this.$store.commit('selectMove', {
                     x: rowIndex,
                     y: itemIndex
