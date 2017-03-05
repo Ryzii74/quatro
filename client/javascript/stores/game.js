@@ -138,7 +138,7 @@ module.exports = {
 
         makeMove(state, field) {
             const move = state.selectedMove;
-            state.field[field.x][field.y] = state.moves[move.x][move.y];
+            state.field[field.x].splice(field.y, 1, state.moves[move.x][move.y]);
             state.moves[move.x][move.y] = null;
         },
 
