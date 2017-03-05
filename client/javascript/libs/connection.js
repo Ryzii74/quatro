@@ -1,3 +1,15 @@
+function innerMessageHandler(callback) {
+    return result => {
+        console.log(result);
+        if (result.success) {
+            callback(null, result.data);
+        } else {
+            console.error(result.error);
+            callback(result.error);
+        }
+    };
+}
+
 class Connection {
     constructor() {
         this.socket = io();
@@ -9,14 +21,11 @@ class Connection {
     }
 
     send(method, data, callback) {
-        this.socket.emit(method, data, result => {
-            if (result.success) {
-                callback(null, result.data);
-            } else {
-                console.error(result.error);
-                callback(result.error);
-            }
-        });
+        this.socket.emit(method, data, innerMessageHandler(callback));
+    }
+
+    subscribe(method, callback) {
+        this.socket.on(method, innerMessageHandler(callback));
     }
 }
 

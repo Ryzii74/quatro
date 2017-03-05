@@ -3,11 +3,21 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
+const SocketsOnline = require('./libs/socketsOnline');
 const Router = require('./router');
 Router.init();
 
 io.on('connection', socket => {
+    socket.on('disconnect', () => {
+        SocketsOnline.dec();
+        socket.broadcast.emit('socketsOnline', SocketsOnline.get());
+    });
     Router.initSocketMethods(socket);
+
+    process.nextTick(() => {
+        SocketsOnline.inc();
+        socket.broadcast.emit('socketsOnline', SocketsOnline.get());
+    });
 });
 server.listen(3000);
 

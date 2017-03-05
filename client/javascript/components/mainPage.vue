@@ -2,6 +2,7 @@
 div
     h1 Привет
     h2 Количество игр {{games.length}}
+    h2 Количество игроков {{playersOnline}}
 
     a(href="#", v-on:click.prevent="createGame()") Создать игру
 </template>
@@ -19,10 +20,17 @@ div
 
                 this.$store.commit('initGamesList', data.games);
             });
+
+            Connection.subscribe('socketsOnline', (err, data) => {
+                this.$store.commit('setPlayersOnline', data.count);
+            });
         },
         computed: Vuex.mapState({
             games(state) {
                 return state.main.games;
+            },
+            playersOnline(state) {
+                return state.main.playersOnline;
             }
         }),
         methods: {
