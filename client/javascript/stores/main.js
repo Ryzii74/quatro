@@ -2,7 +2,7 @@ module.exports = {
     namespaced: true,
 
     state: {
-        games: null
+        games: []
     },
 
     mutations: {
