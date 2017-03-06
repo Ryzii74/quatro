@@ -18,6 +18,10 @@ module.exports = {
 
         login(state, login) {
             state.login = login;
+        },
+
+        logout(state) {
+            state.login = null;
         }
     }
 };

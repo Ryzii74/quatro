@@ -7,7 +7,7 @@ div#auth
 </template>
 
 <script>
-    const Connection = require('../libs/connection');
+    const Auth = require('../libs/auth');
 
     module.exports = {
         data() {
@@ -19,20 +19,34 @@ div#auth
 
         methods: {
             logIn() {
-                Connection.send('login', {
+                Auth.login({
                     login: this.login,
                     password: this.password
                 }, (err, data) => {
-                    console.log(err, data);
+                    if (err) {
+                        console.error('error login', err);
+                        return;
+                    }
+
+                    this.response(data);
                 });
             },
             signUp() {
-                Connection.send('signup', {
+                Auth.signup({
                     login: this.login,
                     password: this.password
                 }, (err, data) => {
-                    console.log(err, data);
+                    if (err) {
+                        console.error('error signup', err);
+                        return;
+                    }
+
+                    this.response(data);
                 });
+            },
+            response(data) {
+                this.$store.commit('login', data.login);
+                this.$router.push('/');
             }
         }
     };

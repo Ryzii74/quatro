@@ -11,7 +11,8 @@
     <div id="app">
         <router-link to="/">Main page</router-link>
         <router-link to="/game">Game</router-link>
-        <router-link to="/auth">Auth</router-link>
+        <router-link v-if="!login" to="/auth">Auth</router-link>
+        <a href="#" v-else v-on:click.prevent="logout()">Logout</a>
         <router-view></router-view>
     </div>
 

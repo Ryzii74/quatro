@@ -25,15 +25,6 @@ div
                 this.$store.commit('initGamesList', data.games);
             });
 
-            Connection.send('auth', { login: 'test' }, (err, data) => {
-                if (err) {
-                    console.error('error getting games list', err);
-                    return;
-                }
-
-                this.$store.commit('login', data.login);
-            });
-
             Connection.subscribe('socketsOnline', (err, data) => {
                 this.$store.commit('setPlayersOnline', data.count);
             });
