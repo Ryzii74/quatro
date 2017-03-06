@@ -3,15 +3,20 @@ div
     h1 Привет
     h2 Количество игр {{games.length}}
     h2 Количество игроков {{playersOnline}}
-    h2 Вы авторизованы как {{login}}
+
+    auth
 
     a(href="#", v-on:click.prevent="createGame()") Создать игру
 </template>
 
 <script>
     const Connection = require('../libs/connection');
+    const auth = require('./auth.vue');
 
     module.exports = {
+        components: {
+            auth
+        },
         created() {
             Connection.send('getGameOffers', {}, (err, data) => {
                 if (err) {
