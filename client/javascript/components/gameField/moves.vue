@@ -35,8 +35,7 @@
                 if (this.moves[rowIndex][itemIndex] === null) return;
                 if (this.selectedMove
                     && rowIndex === this.selectedMove.x
-                    && itemIndex === this.selectedMove.y)
-                {
+                    && itemIndex === this.selectedMove.y) {
                     this.$store.commit('clearSelectedMove');
                     return;
                 }

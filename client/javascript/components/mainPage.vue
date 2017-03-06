@@ -4,8 +4,6 @@ div
     h2 Количество игр {{games.length}}
     h2 Количество игроков {{playersOnline}}
 
-    auth
-
     a(href="#", v-on:click.prevent="createGame()") Создать игру
 </template>
 
