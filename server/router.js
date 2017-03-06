@@ -3,13 +3,19 @@ const Path = require('path');
 
 const Routes = [];
 
-module.exports.init = () => {
+module.exports.init = callback => {
     const routerFolder = Path.join(__dirname, 'routes');
-    Fs.readdirSync(routerFolder).forEach(file =>
-        /* eslint-disable */
-        Routes.push(require(`./routes/${file}`))
-        /* eslint-enable */
-    );
+    Fs.readdir(routerFolder, (err, files) => {
+        if (err) return callback(err);
+
+        files.forEach(file =>
+            /* eslint-disable */
+            Routes.push(require(`./routes/${file}`))
+            /* eslint-enable */
+        );
+
+        callback();
+    });
 };
 
 module.exports.initSocketMethods = socket => {
