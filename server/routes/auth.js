@@ -9,8 +9,9 @@ const INTERNAL_ERROR = 'внутренняя ошибка';
 
 module.exports = socket => {
     socket.on('login', (data, callback) => {
+        data.hash = data.hash || getHash(data);
         Db.get().collection('users').findOne({
-            hash: data.hash || getHash(data)
+            hash: data.hash
         }, (err, user) => {
             if (err) {
                 console.error('error getting user data', err);
@@ -32,7 +33,8 @@ module.exports = socket => {
             callback({
                 success: true,
                 data: {
-                    login: user.login
+                    login: user.login,
+                    hash: data.hash
                 }
             });
         });
@@ -83,7 +85,7 @@ module.exports = socket => {
                 error: err
             });
 
-            socket.userId = userId; 
+            socket.userId = userId;
             callback({
                 success: true,
                 data: {
