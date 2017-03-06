@@ -11,6 +11,7 @@ module.exports = socket => {
     });
 
     socket.on('createGameOffer', (data, callback) => {
+        data.login = login;
         GameOffers.add(data);
 
         callback({

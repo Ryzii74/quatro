@@ -3,6 +3,7 @@ div
     h1 Привет
     h2 Количество игр {{games.length}}
     h2 Количество игроков {{playersOnline}}
+    h2 Вы авторизованы как {{login}}
 
     a(href="#", v-on:click.prevent="createGame()") Создать игру
 </template>
@@ -21,6 +22,15 @@ div
                 this.$store.commit('initGamesList', data.games);
             });
 
+            Connection.send('auth', { login: 'test' }, (err, data) => {
+                if (err) {
+                    console.error('error getting games list', err);
+                    return;
+                }
+
+                this.$store.commit('login', data.login);
+            });
+
             Connection.subscribe('socketsOnline', (err, data) => {
                 this.$store.commit('setPlayersOnline', data.count);
             });
@@ -31,6 +41,9 @@ div
             },
             playersOnline(state) {
                 return state.main.playersOnline;
+            },
+            login(state) {
+                return state.main.login;
             }
         }),
         methods: {
