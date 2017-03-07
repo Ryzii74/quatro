@@ -16,14 +16,7 @@ div
             auth
         },
         created() {
-            Connection.send('getGameOffers', {}, (err, data) => {
-                if (err) {
-                    console.error('error getting games list', err);
-                    return;
-                }
-
-                this.$store.commit('initGamesList', data.games);
-            });
+            this.getGames();
 
             Connection.subscribe('socketsOnline', (err, data) => {
                 this.$store.commit('setPlayersOnline', data.count);
@@ -45,6 +38,17 @@ div
                 Connection.send('createGameOffer', { type: 'test' }, (err, data) => {
                     if (err) {
                         console.error('error creating game', err);
+                        return;
+                    }
+
+                    this.$store.commit('initGamesList', data.games);
+                });
+            },
+
+            getGames() {
+                Connection.send('getGameOffers', { type: 'test' }, (err, data) => {
+                    if (err) {
+                        console.error('error getting games list', err);
                         return;
                     }
 
