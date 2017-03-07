@@ -29,7 +29,10 @@ module.exports = socket => {
                 });
             }
 
-            socket.userId = user._id.toString();
+            socket.user = {
+                id: user._id.toString(),
+                login: user.login
+            };
             callback({
                 success: true,
                 data: {
@@ -85,7 +88,10 @@ module.exports = socket => {
                 error: err
             });
 
-            socket.userId = userId;
+            socket.user = {
+                id: userId.toString(),
+                login: data.login
+            };
             callback({
                 success: true,
                 data: {
