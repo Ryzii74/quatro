@@ -3,8 +3,8 @@ class GameOffers {
         this.gameOffers = [];
     }
 
-    get(type) {
-        return this.gameOffers.filter(game => game.type === type);
+    get() {
+        return this.gameOffers;
     }
 
     add(gameData) {
@@ -14,8 +14,8 @@ class GameOffers {
         this.gameOffers.push(gameData);
     }
 
-    remove(gameAuthor) {
-        const gameIndex = this.gameOffers.findIndex(game => game.author === gameAuthor);
+    remove(userId) {
+        const gameIndex = this.gameOffers.findIndex(offer => offer.userId === userId);
         if (gameIndex === -1) return;
 
         this.gameOffers.splice(gameIndex, 1);

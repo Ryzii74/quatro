@@ -6,12 +6,22 @@ module.exports = socket => {
         callback({
             success: true,
             data: {
-                games: GameOffers.get(type)
+                games: GameOffers.get()
             }
         });
     });
 
     socket.on('createGameOffer', (data, callback) => {
+        if (!socket.user.id) {
+            callback({
+                success: true,
+                data: {
+                    games: GameOffers.get()
+                }
+            });
+            return;
+        }
+
         data.login = socket.user.login;
         data.userId = socket.user.id;
         data.gameId = uuid.v4();
@@ -20,7 +30,17 @@ module.exports = socket => {
         callback({
             success: true,
             data: {
-                games: GameOffers.get(data.type)
+                games: GameOffers.get()
+            }
+        });
+    });
+
+    socket.on('removeGameOffer', (data, callback) => {
+        GameOffers.remove(socket.user.id);
+        callback({
+            success: true,
+            data: {
+                games: GameOffers.get()
             }
         });
     });

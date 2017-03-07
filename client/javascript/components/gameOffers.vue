@@ -7,9 +7,13 @@ div#gameOffers
         )
             td {{index + 1}}
             td {{game.login}}
+            td(
+                v-on:click="removeMyOffer()",
+                v-if="isMyOffer(game)"
+            ) Remove
     a(
         href="#",
-        v-on:click.prevent="createGame()"
+        v-on:click.prevent="createGame()",
         v-if="!isGameOfferCreated()"
     ) Создать игру
 </template>
@@ -30,6 +34,14 @@ div#gameOffers
             }
         }),
         methods: {
+            removeMyOffer() {
+                Connection.send('removeGameOffer', {}, (err, data) => {
+                    if (err) return;
+
+                    this.$store.commit('initGamesList', data.games);
+                });
+            },
+
             isMyOffer(game) {
                 return game.userId === this.userId;
             },
