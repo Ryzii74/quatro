@@ -3,9 +3,9 @@ const Session = require('./session');
 
 module.exports = {
     login(data, callback) {
-        Connection.send('login', data, (err, data) => {
-            if (data && data.hash) Session.saveSession(data.hash);
-            callback(err, data);
+        Connection.send('login', data, (err, user) => {
+            if (user && user.hash) Session.saveSession(user.hash);
+            callback(err, user);
         });
     },
 

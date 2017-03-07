@@ -3,11 +3,11 @@ Vue.use(Vuex);
 const Connection = require('./libs/connection');
 const Router = require('./libs/router');
 const store = require('./stores/index.js');
+const Auth = require('./libs/auth');
+const Session = require('./libs/session');
 
 Connection.init(() => {
     const router = Router.init();
-    const Auth = require('./libs/auth');
-    const Session = require('./libs/session');
 
     new Vue({
         created() {
@@ -22,12 +22,12 @@ Connection.init(() => {
                     console.error(currentSession);
                     return;
                 }
-                this.$store.commit('login', data.login);
+                this.$store.commit('login', data);
             });
         },
         computed: Vuex.mapState({
-            login(state) {
-                return state.main.login;
+            userId(state) {
+                return state.user.id;
             }
         }),
         methods: {

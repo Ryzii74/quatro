@@ -10,7 +10,7 @@ class GameOffers {
     add(gameData) {
         const userGameOffer = this.gameOffers.find(offer => offer.userId === gameData.userId);
         if (userGameOffer) return;
-        
+
         this.gameOffers.push(gameData);
     }
 

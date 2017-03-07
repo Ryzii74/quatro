@@ -37,6 +37,7 @@ module.exports = socket => {
                 success: true,
                 data: {
                     login: user.login,
+                    id: socket.user.id,
                     hash: data.hash
                 }
             });
@@ -96,6 +97,7 @@ module.exports = socket => {
                 success: true,
                 data: {
                     login: data.login,
+                    id: socket.user.id,
                     hash
                 }
             })

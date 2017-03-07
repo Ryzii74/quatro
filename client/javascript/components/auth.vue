@@ -45,7 +45,7 @@ div#auth
                 });
             },
             response(data) {
-                this.$store.commit('login', data.login);
+                this.$store.commit('login', data);
                 this.$router.push('/');
             }
         }
