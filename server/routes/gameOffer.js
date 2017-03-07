@@ -1,3 +1,4 @@
+const uuid = require('node-uuid');
 const GameOffers = require('../libs/gamesOfferManager');
 
 module.exports = socket => {
@@ -11,7 +12,9 @@ module.exports = socket => {
     });
 
     socket.on('createGameOffer', (data, callback) => {
-        data.login = socket.login;
+        data.login = socket.user.login;
+        data.userId = socket.user.id;
+        data.gameId = uuid.v4();
         GameOffers.add(data);
 
         callback({
