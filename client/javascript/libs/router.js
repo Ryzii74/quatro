@@ -1,13 +1,15 @@
 const MainPage = require('../components/mainPage.vue');
 const GameField = require('../components/gameField/index.vue');
 const Auth = require('../components/auth.vue');
+const Profile = require('../components/profile/index.vue')
 
 module.exports = {
     init() {
         const routes = [
             { path: '/', component: MainPage },
             { path: '/game', component: GameField },
-            { path: '/auth', component: Auth }
+            { path: '/auth', component: Auth },
+            { path: '/profile', component: Profile },
         ];
 
         return new VueRouter({
