@@ -19,17 +19,11 @@
 <script>
     module.exports = {
         computed: Vuex.mapState({
-            selectedMove(state) {
-                return state.game.selectedMove;
-            },
-            moves(state) {
-                return state.game.moves;
-            },
-            isMoveAvailable(state) {
-                return !state.game.isGameWined
-                        && !state.game.isGameEnded
-                        && state.game.currentMove === state.user.id;
-            }
+            selectedMove: state => state.game.selectedMove,
+            moves: state => state.game.moves,
+            isMoveAvailable: state => !state.game.isGameWined
+                && !state.game.isGameEnded
+                && state.game.currentMove === state.user.id
         }),
         methods: {
             isItemSelected(rowIndex, itemIndex) {

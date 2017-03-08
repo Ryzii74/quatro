@@ -30,8 +30,8 @@ div#gameOffers
         created() {
             this.getGames();
             this.intervalGameOffersUpdating = setInterval(
-                    this.getGames.bind(this),
-                    Config.intervalUpdatingGameOffersList
+                this.getGames.bind(this),
+                Config.intervalUpdatingGameOffersList
             );
 
             Connection.subscribe('startGame', (err, data) => {
@@ -40,12 +40,8 @@ div#gameOffers
             });
         },
         computed: Vuex.mapState({
-            games(state) {
-                return state.main.games;
-            },
-            userId(state) {
-                return state.user.id;
-            }
+            games: state => state.main.games,
+            userId: state => state.user.id
         }),
         methods: {
             removeMyOffer() {
@@ -55,15 +51,12 @@ div#gameOffers
                     this.$store.commit('initGamesList', data.games);
                 });
             },
-
             isMyOffer(game) {
                 return game.userId === this.userId;
             },
-
             isGameOfferCreated() {
                 return this.games.findIndex(this.isMyOffer) !== -1;
             },
-
             createGame() {
                 Connection.send('createGameOffer', { type: 'test' }, (err, data) => {
                     if (err) {
@@ -74,7 +67,6 @@ div#gameOffers
                     this.$store.commit('initGamesList', data.games);
                 });
             },
-
             getGames() {
                 Connection.send('getGameOffers', { type: 'test' }, (err, data) => {
                     if (err) {
@@ -85,13 +77,11 @@ div#gameOffers
                     this.$store.commit('initGamesList', data.games);
                 });
             },
-
             startGame(game) {
                 Connection.send('startGame', { userId: game.userId }, err => {
                     if (err) console.error('error starting game', err);
                 });
             },
-
             clearIntervalGameOffersUpdating() {
                 clearInterval(this.intervalGameOffersUpdating);
             }

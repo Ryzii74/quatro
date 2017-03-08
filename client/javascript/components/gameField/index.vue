@@ -16,15 +16,9 @@
             field: gameField
         },
         computed: Vuex.mapState({
-            yourTurn(state) {
-                return state.user.id === state.game.currentMove;
-            },
-            isGameEnded(state) {
-                return state.game.isGameEnded;
-            },
-            isGameWined(state) {
-                return state.game.isGameWined;
-            }
+            yourTurn: state => state.user.id === state.game.currentMove,
+            isGameEnded: state => state.game.isGameEnded,
+            isGameWined: state => state.game.isGameWined
         }),
         methods: {
             getTurnHeader() {

@@ -20,12 +20,9 @@ div
             });
         },
         computed: Vuex.mapState({
-            playersOnline(state) {
-                return state.main.playersOnline;
-            }
+            playersOnline: state => state.main.playersOnline
         }),
         beforeRouteLeave(to, from, next) {
-            console.log('beforeRouteLeave');
             this.$refs.gameOffers.clearIntervalGameOffersUpdating();
             next();
         }

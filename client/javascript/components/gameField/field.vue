@@ -28,15 +28,9 @@
             });
         },
         computed: Vuex.mapState({
-            selectedMove(state) {
-                return state.game.selectedMove;
-            },
-            field(state) {
-                return state.game.field;
-            },
-            yourTurn(state) {
-                return state.user.id === state.game.currentMove;
-            }
+            selectedMove: state => state.game.selectedMove,
+            field: state => state.game.field,
+            yourTurn: state => state.user.id === state.game.currentMove
         }),
         methods: {
             makeMove(rowIndex, itemIndex) {
@@ -63,11 +57,11 @@
                 this.checkIsGameEnded();
             },
             checkIsGameWined() {
-                let isGameWined = SharedGame.isGameWined(this.field);
+                const isGameWined = SharedGame.isGameWined(this.field);
                 if (isGameWined) this.$store.commit('gameWined');
             },
             checkIsGameEnded() {
-                let isGameEnded = SharedGame.isGameEnded(this.field);
+                const isGameEnded = SharedGame.isGameEnded(this.field);
                 if (isGameEnded) this.$store.commit('gameEnded');
             }
         }
