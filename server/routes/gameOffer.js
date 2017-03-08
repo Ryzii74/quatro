@@ -12,7 +12,7 @@ module.exports = socket => {
     });
 
     socket.on('createGameOffer', (data, callback) => {
-        if (!socket.user.id) {
+        if (!socket.user) {
             callback({
                 success: true,
                 data: {
@@ -36,6 +36,8 @@ module.exports = socket => {
     });
 
     socket.on('removeGameOffer', (data, callback) => {
+        if (!socket.user) return;
+
         GameOffers.remove(socket.user.id);
         callback({
             success: true,
