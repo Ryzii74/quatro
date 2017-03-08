@@ -120,16 +120,20 @@ module.exports = {
         field: null,
         yourTurn: null,
         isGameEnded: null,
-        isGameWined: null
+        isGameWined: null,
+        players: null,
+        gameId: null
     },
 
     mutations: {
-        initGame(state) {
+        startGame(state, data) {
             state.moves = Array.from(MOVES);
             state.field = Array.from(FIELD);
             state.isGameEnded = false;
             state.isGameWined = false;
             state.yourTurn = true;
+            state.players = data.players;
+            state.gameId = data.gameId;
         },
 
         selectMove(state, data) {

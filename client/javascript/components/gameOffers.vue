@@ -11,6 +11,10 @@ div#gameOffers
                 v-on:click="removeMyOffer()",
                 v-if="isMyOffer(game)"
             ) Remove
+            td(
+                v-on:click="startGame(game)",
+                v-if="!isMyOffer(game)"
+            ) Join
     a(
         href="#",
         v-on:click.prevent="createGame()",
@@ -24,6 +28,11 @@ div#gameOffers
     module.exports = {
         created() {
             this.getGames();
+
+            Connection.subscribe('startGame', (err, data) => {
+                this.$store.commit('startGame', data);
+                this.$router.push('/game');
+            });
         },
         computed: Vuex.mapState({
             games(state) {
@@ -69,6 +78,12 @@ div#gameOffers
                     }
 
                     this.$store.commit('initGamesList', data.games);
+                });
+            },
+
+            startGame(game) {
+                Connection.send('startGame', { userId: game.userId }, err => {
+                    if (err) console.error('error starting game', err);
                 });
             }
         }

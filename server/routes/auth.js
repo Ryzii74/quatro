@@ -5,6 +5,22 @@ function getHash(data) {
     return JSON.stringify(data);
 }
 
+function auth(socket, user, callback) {
+    socket.user = {
+        id: user._id.toString(),
+        login: user.login
+    };
+    socket.join(socket.user.id);
+    callback({
+        success: true,
+        data: {
+            login: user.login,
+            id: socket.user.id,
+            hash: user.hash
+        }
+    });
+}
+
 const INTERNAL_ERROR = 'внутренняя ошибка';
 
 module.exports = socket => {
@@ -29,28 +45,15 @@ module.exports = socket => {
                 });
             }
 
-            socket.user = {
-                id: user._id.toString(),
-                login: user.login
-            };
-            callback({
-                success: true,
-                data: {
-                    login: user.login,
-                    id: socket.user.id,
-                    hash: data.hash
-                }
-            });
+            auth(socket, user, callback);
         });
     });
 
     socket.on('logout', (data, callback) => {
-        socket.login = null;
+        if (socket.user) socket.leave(socket.user.id);
+        socket.user = null;
         callback({
-            success: true,
-            data: {
-                login: null
-            }
+            success: true
         });
     });
 
@@ -70,37 +73,29 @@ module.exports = socket => {
 
                 callback();
             }),
-            callback => Db.get().collection('users').insertOne({
-                login: data.login,
-                password: data.password,
-                hash
-            }, (err, result) => {
-                if (err) {
-                    console.error('error getting user with login', err);
-                    console.error(data);
-                    return callback(INTERNAL_ERROR);
-                }
-
-                callback(null, result.insertedId);
-            })
-        ], (err, userId) => {
+            callback => {
+                const user = {
+                    login: data.login,
+                    password: data.password,
+                    hash
+                };
+                Db.get().collection('users').insertOne(user, (err, result) => {
+                    if (err) {
+                        console.error('error getting user with login', err);
+                        console.error(data);
+                        return callback(INTERNAL_ERROR);
+                    }
+                    user._id = result.insertedId;
+                    callback(null, user);
+                })
+            }
+        ], (err, user) => {
             if (err) return callback({
                 success: false,
                 error: err
             });
 
-            socket.user = {
-                id: userId.toString(),
-                login: data.login
-            };
-            callback({
-                success: true,
-                data: {
-                    login: data.login,
-                    id: socket.user.id,
-                    hash
-                }
-            })
+            auth(socket, user, callback);
         });
 
     });

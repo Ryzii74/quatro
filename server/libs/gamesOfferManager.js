@@ -1,3 +1,5 @@
+const uuid = require('node-uuid');
+
 class GameOffers {
     constructor() {
         this.gameOffers = [];
@@ -7,10 +9,15 @@ class GameOffers {
         return this.gameOffers;
     }
 
+    find(userId) {
+        return this.gameOffers.find(offer => offer.userId === userId);
+    }
+
     add(gameData) {
-        const userGameOffer = this.gameOffers.find(offer => offer.userId === gameData.userId);
+        const userGameOffer = this.find(gameData.userId);
         if (userGameOffer) return;
 
+        gameData.gameId = uuid.v4();
         this.gameOffers.push(gameData);
     }
 

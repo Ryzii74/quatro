@@ -14,9 +14,6 @@
             moves: gameMoves,
             field: gameField
         },
-        created() {
-            this.$store.commit('initGame');
-        },
         computed: Vuex.mapState({
             yourTurn(state) {
                 return state.game.yourTurn;
