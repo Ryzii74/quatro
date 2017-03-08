@@ -1,7 +1,7 @@
 const MainPage = require('../components/mainPage.vue');
 const GameField = require('../components/gameField/index.vue');
 const Auth = require('../components/auth.vue');
-const Profile = require('../components/profile/index.vue')
+const Profile = require('../components/profile/index.vue');
 
 module.exports = {
     init() {
@@ -9,7 +9,7 @@ module.exports = {
             { path: '/', component: MainPage },
             { path: '/game', component: GameField },
             { path: '/auth', component: Auth },
-            { path: '/profile', component: Profile },
+            { path: '/profile', component: Profile }
         ];
 
         return new VueRouter({

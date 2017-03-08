@@ -237,10 +237,7 @@
                     move: this.selectedMove,
                     gameId: this.$store.state.game.gameId
                 }, (err, data) => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
+                    if (err) console.error(err);
                 });
 
                 this.$store.commit('clearSelectedMove');
