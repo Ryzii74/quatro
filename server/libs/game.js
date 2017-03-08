@@ -6,6 +6,8 @@ class Game {
         this.players = [playerA, playerB];
         this.moves = [];
         this.currentMove = (Math.random() < 0.5) ? playerA : playerB;
+        this.field = [];
+        this.moves = [];
     }
 
     makeMove(move) {
