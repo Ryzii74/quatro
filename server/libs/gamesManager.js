@@ -19,5 +19,9 @@ module.exports = {
 
         SocketServer.send(playerA, 'startGame', data);
         SocketServer.send(playerB, 'startGame', data);
+    },
+
+    get(gameId) {
+        return games[gameId];
     }
 };

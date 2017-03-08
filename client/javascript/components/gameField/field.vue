@@ -198,8 +198,17 @@
             }
         ]
     ];
+    const Connection = require('../../libs/connection');
 
     module.exports = {
+        created() {
+            Connection.subscribe('opponentMove', (err, data) => {
+                this.$store.commit('opponentMove', data);
+
+                this.checkIsGameWined();
+                this.checkIsGameEnded();
+            });
+        },
         computed: Vuex.mapState({
             selectedMove(state) {
                 return state.game.selectedMove;
@@ -221,8 +230,20 @@
                     x: rowIndex,
                     y: itemIndex
                 });
-                this.$store.commit('clearSelectedMove');
 
+                Connection.send('gameMove', {
+                    x: rowIndex,
+                    y: itemIndex,
+                    move: this.selectedMove,
+                    gameId: this.$store.state.game.gameId
+                }, (err, data) => {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                });
+
+                this.$store.commit('clearSelectedMove');
                 this.checkIsGameWined();
                 this.checkIsGameEnded();
             },

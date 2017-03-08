@@ -144,6 +144,14 @@ module.exports = {
             const move = state.selectedMove;
             state.field[field.x].splice(field.y, 1, state.moves[move.x][move.y]);
             state.moves[move.x][move.y] = null;
+            state.currentMove = state.players.find(id => state.currentMove !== id);
+        },
+
+        opponentMove(state, data) {
+            const move = data.move;
+            state.field[data.x].splice(data.y, 1, state.moves[move.x][move.y]);
+            state.moves[move.x][move.y] = null;
+            state.currentMove = state.players.find(id => state.currentMove !== id);
         },
 
         clearSelectedMove(state) {

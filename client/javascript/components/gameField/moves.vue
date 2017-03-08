@@ -24,6 +24,11 @@
             },
             moves(state) {
                 return state.game.moves;
+            },
+            isMoveAvailable(state) {
+                return !state.game.isGameWined
+                        && !state.game.isGameEnded
+                        && state.game.currentMove === state.user.id;
             }
         }),
         methods: {
@@ -33,6 +38,7 @@
                         && this.selectedMove.y === itemIndex;
             },
             selectMove(rowIndex, itemIndex) {
+                if (!this.isMoveAvailable) return;
                 if (this.moves[rowIndex][itemIndex] === null) return;
                 if (this.isItemSelected(rowIndex, itemIndex)) {
                     this.$store.commit('clearSelectedMove');

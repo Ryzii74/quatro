@@ -8,6 +8,7 @@
 <script>
     const gameMoves = require('./moves.vue');
     const gameField = require('./field.vue');
+    const Connection = require('../../libs/connection');
 
     module.exports = {
         components: {

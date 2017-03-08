@@ -9,7 +9,16 @@ class Game {
     }
 
     makeMove(move) {
+        this.changeCurrentMove();
         this.moves.push(move);
+    }
+
+    changeCurrentMove() {
+        this.currentMove = this.getOpponent(this.currentMove);
+    }
+
+    getOpponent(userId) {
+        return this.players.find(id => id !== userId);
     }
 }
 
