@@ -118,7 +118,7 @@ module.exports = {
         selectedMove: null,
         moves: null,
         field: null,
-        yourTurn: null,
+        currentMove: null,
         isGameEnded: null,
         isGameWined: null,
         players: null,
@@ -131,7 +131,7 @@ module.exports = {
             state.field = Array.from(FIELD);
             state.isGameEnded = false;
             state.isGameWined = false;
-            state.yourTurn = true;
+            state.currentMove = data.currentMove;
             state.players = data.players;
             state.gameId = data.gameId;
         },
@@ -156,10 +156,6 @@ module.exports = {
 
         gameEnded(state) {
             state.isGameEnded = true;
-        },
-
-        changeTurn(state) {
-            state.yourTurn = !state.yourTurn;
         }
     }
 };

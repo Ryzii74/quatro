@@ -12,10 +12,11 @@ module.exports = {
             success: true,
             data: {
                 gameId: game.id,
-                players: game.players
+                players: game.players,
+                currentMove: game.currentMove
             }
         };
-        console.log(data);
+
         SocketServer.send(playerA, 'startGame', data);
         SocketServer.send(playerB, 'startGame', data);
     }

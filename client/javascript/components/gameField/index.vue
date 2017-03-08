@@ -16,7 +16,7 @@
         },
         computed: Vuex.mapState({
             yourTurn(state) {
-                return state.game.yourTurn;
+                return state.user.id === state.game.currentMove;
             },
             isGameEnded(state) {
                 return state.game.isGameEnded;
@@ -27,11 +27,11 @@
         }),
         methods: {
             getTurnHeader() {
-                if (this.isGameEnded) return 'Игра окончена!';
                 if (this.isGameWined) {
-                    return (this.yourTurn) ? 'Победил игрок 2!' : 'Победил игрок 1';
+                    return (this.yourTurn) ? 'Вы проиграли!' : 'Вы победили!';
                 }
-                return this.yourTurn ? 'Ход игрока 1' : 'Ход игрока 2';
+                if (this.isGameEnded) return 'Игра окончена! Ничья!';
+                return this.yourTurn ? 'Ваш ход' : 'Ход противника';
             }
         }
     };

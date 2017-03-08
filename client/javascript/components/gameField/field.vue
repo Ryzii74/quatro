@@ -208,20 +208,20 @@
                 return state.game.field;
             },
             yourTurn(state) {
-                return state.game.yourTurn;
+                return state.user.id === state.game.currentMove;
             }
         }),
         methods: {
             makeMove(rowIndex, itemIndex) {
                 if (!this.selectedMove) return;
                 if (this.field[rowIndex][itemIndex]) return;
+                if (!this.yourTurn) return;
 
                 this.$store.commit('makeMove', {
                     x: rowIndex,
                     y: itemIndex
                 });
                 this.$store.commit('clearSelectedMove');
-                this.$store.commit('changeTurn');
 
                 this.checkIsGameWined();
                 this.checkIsGameEnded();
