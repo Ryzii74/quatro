@@ -22,30 +22,29 @@ div#auth
                 Auth.login({
                     login: this.login,
                     password: this.password
-                }, (err, data) => {
+                }, err => {
                     if (err) {
                         console.error('error login', err);
                         return;
                     }
 
-                    this.response(data);
+                    this.response();
                 });
             },
             signUp() {
                 Auth.signup({
                     login: this.login,
                     password: this.password
-                }, (err, data) => {
+                }, err => {
                     if (err) {
                         console.error('error signup', err);
                         return;
                     }
 
-                    this.response(data);
+                    this.response();
                 });
             },
             response(data) {
-                this.$store.commit('login', data);
                 this.$router.push('/');
             }
         }

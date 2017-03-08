@@ -1,7 +1,8 @@
 <template lang="jade">
     table#field
         tr.row(v-for="row, rowIndex in field")
-            td(v-for="item, itemIndex in row",
+            td(
+                v-for="item, itemIndex in row",
                 v-on:click="makeMove(rowIndex, itemIndex)"
             )
                 div.item(v-bind:class=`[
@@ -208,17 +209,12 @@
             },
             yourTurn(state) {
                 return state.game.yourTurn;
-            },
-            isGameEnded(state) {
-                return state.game.isGameEnded;
-            },
-            isGameWined(state) {
-                return state.game.isGameWined;
             }
         }),
         methods: {
             makeMove(rowIndex, itemIndex) {
                 if (!this.selectedMove) return;
+                if (this.field[rowIndex][itemIndex]) return;
 
                 this.$store.commit('makeMove', {
                     x: rowIndex,

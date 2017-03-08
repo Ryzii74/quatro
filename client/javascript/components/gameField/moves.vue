@@ -1,7 +1,8 @@
 <template lang="jade">
     table#moves
         tr.row(v-for="row, rowIndex in moves")
-            td(v-for="item, itemIndex in row",
+            td(
+                v-for="item, itemIndex in row",
                 v-on:click="selectMove(rowIndex, itemIndex)",
                 v-bind:class="(isItemSelected(rowIndex, itemIndex)) ? 'selected' : ''"
             )
@@ -33,9 +34,7 @@
             },
             selectMove(rowIndex, itemIndex) {
                 if (this.moves[rowIndex][itemIndex] === null) return;
-                if (this.selectedMove
-                    && rowIndex === this.selectedMove.x
-                    && itemIndex === this.selectedMove.y) {
+                if (this.isItemSelected(rowIndex, itemIndex)) {
                     this.$store.commit('clearSelectedMove');
                     return;
                 }

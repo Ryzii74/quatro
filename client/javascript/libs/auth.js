@@ -1,16 +1,26 @@
 const Connection = require('./connection');
 const Session = require('./session');
+const Store = require('../stores/index');
 
 module.exports = {
     login(data, callback) {
         Connection.send('login', data, (err, user) => {
+            if (err) return;
+
             if (user && user.hash) Session.saveSession(user.hash);
-            callback(err, user);
+            Store.commit('login', user);
+
+            if (callback) callback(err, user);
         });
     },
 
     signup(data, callback) {
-        Connection.send('signup', data, callback);
+        Connection.send('signup', data, (err, user) => {
+            if (err) return;
+
+            Store.commit('login', user);
+            if (callback) callback(err, user);
+        });
     },
 
     logout(callback) {

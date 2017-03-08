@@ -14,16 +14,7 @@ Connection.init(() => {
             const currentSession = Session.getSession();
             if (!currentSession) return;
 
-            Auth.login({
-                hash: currentSession
-            }, (err, data) => {
-                if (err) {
-                    console.error('error login with current session', err);
-                    console.error(currentSession);
-                    return;
-                }
-                this.$store.commit('login', data);
-            });
+            Auth.login({ hash: currentSession });
         },
         computed: Vuex.mapState({
             userId(state) {
