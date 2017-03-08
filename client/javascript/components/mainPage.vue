@@ -3,7 +3,7 @@ div
     h1 Привет
     h2 Количество игроков {{playersOnline}}
 
-    gameOffers
+    gameOffers(ref="gameOffers")
 </template>
 
 <script>
@@ -23,7 +23,12 @@ div
             playersOnline(state) {
                 return state.main.playersOnline;
             }
-        })
+        }),
+        beforeRouteLeave(to, from, next) {
+            console.log('beforeRouteLeave');
+            this.$refs.gameOffers.clearIntervalGameOffersUpdating();
+            next();
+        }
     };
 </script>
 

@@ -24,10 +24,15 @@ div#gameOffers
 
 <script>
     const Connection = require('../libs/connection');
+    const Config = require('../config');
 
     module.exports = {
         created() {
             this.getGames();
+            this.intervalGameOffersUpdating = setInterval(
+                    this.getGames.bind(this),
+                    Config.intervalUpdatingGameOffersList
+            );
 
             Connection.subscribe('startGame', (err, data) => {
                 this.$store.commit('startGame', data);
@@ -85,6 +90,10 @@ div#gameOffers
                 Connection.send('startGame', { userId: game.userId }, err => {
                     if (err) console.error('error starting game', err);
                 });
+            },
+
+            clearIntervalGameOffersUpdating() {
+                clearInterval(this.intervalGameOffersUpdating);
             }
         }
     };
