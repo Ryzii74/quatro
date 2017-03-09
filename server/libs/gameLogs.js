@@ -15,6 +15,8 @@ module.exports = {
     },
 
     save(log) {
+        log.date = +new Date();
+
         Db.get()
             .insertOne(log, callback)
     }

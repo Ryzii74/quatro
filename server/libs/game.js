@@ -5,7 +5,6 @@ class Game {
     constructor(playerA, playerB) {
         this.id = uuid.v4();
         this.players = [playerA, playerB];
-        this.moves = [];
         this.currentMove = (Math.random() < 0.5) ? playerA : playerB;
         this.field = SharedGame.getDefaultField();
         this.moves = SharedGame.getDefaultMoves();
@@ -19,7 +18,6 @@ class Game {
             this.field,
             this.moves
         );
-        this.moves.push(move);
 
         return {
             isGameEnded: SharedGame.isGameEnded(this.field),
