@@ -18,6 +18,9 @@ module.exports = {
         log.date = +new Date();
 
         Db.get()
-            .insertOne(log, callback)
+            .collection(LOGS_COLLECTION)
+            .insertOne(log, err => {
+                if (err) console.error('error saving log', err);
+            });
     }
 };
