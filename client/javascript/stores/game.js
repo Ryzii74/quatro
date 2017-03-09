@@ -1,122 +1,4 @@
-const MOVES = [
-    {
-        isRed: true,
-        isCircle: true,
-        isBig: true,
-        isEmpty: true
-    },
-    {
-        isRed: true,
-        isCircle: true,
-        isBig: true,
-        isEmpty: false
-    },
-    {
-        isRed: true,
-        isCircle: true,
-        isBig: false,
-        isEmpty: true
-    },
-    {
-        isRed: true,
-        isCircle: false,
-        isBig: true,
-        isEmpty: true
-    },
-    {
-        isRed: false,
-        isCircle: true,
-        isBig: true,
-        isEmpty: true
-    },
-    {
-        isRed: false,
-        isCircle: false,
-        isBig: true,
-        isEmpty: true
-    },
-    {
-        isRed: false,
-        isCircle: true,
-        isBig: false,
-        isEmpty: true
-    },
-    {
-        isRed: false,
-        isCircle: true,
-        isBig: true,
-        isEmpty: false
-    },
-    {
-        isRed: true,
-        isCircle: false,
-        isBig: false,
-        isEmpty: true
-    },
-    {
-        isRed: true,
-        isCircle: true,
-        isBig: false,
-        isEmpty: false
-    },
-    {
-        isRed: true,
-        isCircle: false,
-        isBig: true,
-        isEmpty: false
-    },
-    {
-        isRed: false,
-        isCircle: false,
-        isBig: false,
-        isEmpty: false
-    },
-    {
-        isRed: true,
-        isCircle: false,
-        isBig: false,
-        isEmpty: false
-    },
-    {
-        isRed: false,
-        isCircle: true,
-        isBig: false,
-        isEmpty: false
-    },
-    {
-        isRed: false,
-        isCircle: false,
-        isBig: true,
-        isEmpty: false
-    },
-    {
-        isRed: false,
-        isCircle: false,
-        isBig: false,
-        isEmpty: true
-    }
-];
-const FIELD = [
-    null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
-];
-
-function getDefaultMoves() {
-    const result = [];
-    const moves = MOVES.slice();
-    while (moves.length) {
-        result.push(moves.splice(0, 4));
-    }
-    return result;
-}
-
-function getDefaultField() {
-    const result = [];
-    const field = FIELD.slice();
-    while (field.length) {
-        result.push(field.splice(0, 4));
-    }
-    return result;
-}
+const SharedGame = require('../../../shared/game');
 
 module.exports = {
     namespaced: true,
@@ -134,8 +16,8 @@ module.exports = {
 
     mutations: {
         startGame(state, data) {
-            state.moves = getDefaultMoves();
-            state.field = getDefaultField();
+            state.moves = SharedGame.getDefaultMoves();
+            state.field = SharedGame.getDefaultField();
             state.isGameEnded = false;
             state.isGameWined = false;
             state.currentMove = data.currentMove;
@@ -147,22 +29,26 @@ module.exports = {
             state.selectedMove = data;
         },
 
-        makeMove(state, field) {
-            const move = state.selectedMove;
-            state.field[field.x].splice(field.y, 1, state.moves[move.x][move.y]);
-            state.moves[move.x][move.y] = null;
+        makeMove(state, fieldCell) {
+            SharedGame.makeMove(state.selectedMove, fieldCell, state.field, state.moves);
             state.currentMove = state.players.find(id => state.currentMove !== id);
         },
 
         opponentMove(state, data) {
             const move = data.move;
-            state.field[data.x].splice(data.y, 1, state.moves[move.x][move.y]);
+            const fieldCell = data.fieldCell;
+            state.field[fieldCell.x].splice(fieldCell.y, 1, state.moves[move.x][move.y]);
             state.moves[move.x][move.y] = null;
             state.currentMove = state.players.find(id => state.currentMove !== id);
         },
 
         clearSelectedMove(state) {
             state.selectedMove = null;
+        },
+
+        setGameState(state, gameState) {
+            state.isGameWined = gameState.isGameWined;
+            state.isGameEnded = gameState.isGameEnded;
         },
 
         gameWined(state) {

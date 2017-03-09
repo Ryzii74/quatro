@@ -22,9 +22,7 @@
         created() {
             Connection.subscribe('opponentMove', (err, data) => {
                 this.$store.commit('opponentMove', data);
-
-                this.checkIsGameWined();
-                this.checkIsGameEnded();
+                this.$store.commit('setGameState', data.gameState);
             });
         },
         computed: Vuex.mapState({
@@ -44,17 +42,18 @@
                 });
 
                 Connection.send('gameMove', {
-                    x: rowIndex,
-                    y: itemIndex,
+                    fieldCell: {
+                        x: rowIndex,
+                        y: itemIndex
+                    },
                     move: this.selectedMove,
                     gameId: this.$store.state.game.gameId
                 }, (err, data) => {
                     if (err) console.error(err);
+                    this.$store.commit('setGameState', data.gameState);
                 });
 
                 this.$store.commit('clearSelectedMove');
-                this.checkIsGameWined();
-                this.checkIsGameEnded();
             },
             checkIsGameWined() {
                 const isGameWined = SharedGame.isGameWined(this.field);

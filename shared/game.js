@@ -191,6 +191,108 @@ function getLineItems(field, line) {
     return items;
 }
 
+const MOVES = [
+    {
+        isRed: true,
+        isCircle: true,
+        isBig: true,
+        isEmpty: true
+    },
+    {
+        isRed: true,
+        isCircle: true,
+        isBig: true,
+        isEmpty: false
+    },
+    {
+        isRed: true,
+        isCircle: true,
+        isBig: false,
+        isEmpty: true
+    },
+    {
+        isRed: true,
+        isCircle: false,
+        isBig: true,
+        isEmpty: true
+    },
+    {
+        isRed: false,
+        isCircle: true,
+        isBig: true,
+        isEmpty: true
+    },
+    {
+        isRed: false,
+        isCircle: false,
+        isBig: true,
+        isEmpty: true
+    },
+    {
+        isRed: false,
+        isCircle: true,
+        isBig: false,
+        isEmpty: true
+    },
+    {
+        isRed: false,
+        isCircle: true,
+        isBig: true,
+        isEmpty: false
+    },
+    {
+        isRed: true,
+        isCircle: false,
+        isBig: false,
+        isEmpty: true
+    },
+    {
+        isRed: true,
+        isCircle: true,
+        isBig: false,
+        isEmpty: false
+    },
+    {
+        isRed: true,
+        isCircle: false,
+        isBig: true,
+        isEmpty: false
+    },
+    {
+        isRed: false,
+        isCircle: false,
+        isBig: false,
+        isEmpty: false
+    },
+    {
+        isRed: true,
+        isCircle: false,
+        isBig: false,
+        isEmpty: false
+    },
+    {
+        isRed: false,
+        isCircle: true,
+        isBig: false,
+        isEmpty: false
+    },
+    {
+        isRed: false,
+        isCircle: false,
+        isBig: true,
+        isEmpty: false
+    },
+    {
+        isRed: false,
+        isCircle: false,
+        isBig: false,
+        isEmpty: true
+    }
+];
+const FIELD = [
+    null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
+];
+
 module.exports = {
     isGameWined(field) {
         let result = false;
@@ -207,7 +309,6 @@ module.exports = {
 
         return result;
     },
-
     isGameEnded(field) {
         let result = true;
         const max = field.length;
@@ -218,5 +319,25 @@ module.exports = {
         }
 
         return result;
+    },
+    getDefaultMoves() {
+        const result = [];
+        const moves = MOVES.slice();
+        while (moves.length) {
+            result.push(moves.splice(0, 4));
+        }
+        return result;
+    },
+    getDefaultField() {
+        const result = [];
+        const field = FIELD.slice();
+        while (field.length) {
+            result.push(field.splice(0, 4));
+        }
+        return result;
+    },
+    makeMove(move, fieldCell, field, moves) {
+        field[fieldCell.x].splice(fieldCell.y, 1, moves[move.x][move.y]);
+        moves[move.x][move.y] = null;
     }
 };

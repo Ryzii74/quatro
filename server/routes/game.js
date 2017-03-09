@@ -18,7 +18,7 @@ module.exports = socket => {
 
     socket.on('gameMove', (data, callback) => {
         const currentGame = GamesManager.get(data.gameId);
-        currentGame.makeMove(data.x, data.y, data.move);
+        data.gameState = currentGame.makeMove(data);
 
         const opponent = currentGame.getOpponent(socket.user.id);
         SocketServer.send(opponent, 'opponentMove', {
@@ -27,7 +27,10 @@ module.exports = socket => {
         });
 
         callback({
-            success: true
+            success: true,
+            data: {
+                gameState: data.gameState
+            }
         });
     });
 };
