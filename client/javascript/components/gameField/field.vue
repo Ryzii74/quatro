@@ -5,12 +5,13 @@
                 v-for="item, itemIndex in row",
                 @click="makeMove(rowIndex, itemIndex)"
             )
-                div.item(:class=`[
-                    (item && item.isRed) ? 'red' : 'green',
-                    (item && item.isCircle) ? 'circle' : '',
-                    (item && item.isBig) ? 'big' : '',
-                    (!item) ? 'empty' : ''
-                ]`)
+                div.item(:class=`{
+                    red: item && item.isRed,
+                    green: item && !item.isRed,
+                    circle: item && item.isCircle,
+                    big: item && item.isBig,
+                    empty: !item
+                }`)
                     div.item-inner(:class="{empty: item && item.isEmpty}")
 </template>
 
@@ -36,24 +37,24 @@
                 if (this.field[rowIndex][itemIndex]) return;
                 if (!this.yourTurn) return;
 
-                this.$store.commit('makeMove', {
+                const fieldCell = {
                     x: rowIndex,
                     y: itemIndex
-                });
+                };
+                this.$store.commit('makeMove', fieldCell);
 
                 Connection.send('gameMove', {
-                    fieldCell: {
-                        x: rowIndex,
-                        y: itemIndex
-                    },
+                    fieldCell,
                     move: this.selectedMove,
                     gameId: this.$store.state.game.gameId
                 }, (err, data) => {
-                    if (err) console.error(err);
+                    if (err) return console.error(err);
                     this.$store.commit('setGameState', data.gameState);
                 });
 
                 this.$store.commit('clearSelectedMove');
+                this.checkIsGameWined();
+                this.checkIsGameEnded();
             },
             checkIsGameWined() {
                 const isGameWined = SharedGame.isGameWined(this.field);
