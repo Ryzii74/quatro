@@ -11,10 +11,10 @@
     <div id="app">
         <router-link to="/">Main page</router-link>
         <router-link v-if="!userId" to="/auth">Auth</router-link>
-        <span v-else>
+        <template v-else>
             <router-link to="/profile">Profile</router-link>
-            <a href="#" v-on:click.prevent="logout()">Logout</a>
-        </span>
+            <a href="#" @click.prevent="logout()">Logout</a>
+        </template>
         <router-view></router-view>
     </div>
 

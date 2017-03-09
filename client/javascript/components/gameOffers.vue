@@ -3,21 +3,21 @@ div#gameOffers
     table
         tr(
             v-for="game, index in games",
-            v-bind:class="isMyOffer(game) ? 'my' : ''"
+            :class="isMyOffer(game) ? 'my' : ''"
         )
             td {{index + 1}}
             td {{game.login}}
             td(
-                v-on:click="removeMyOffer()",
+                @click="removeMyOffer()",
                 v-if="isMyOffer(game)"
             ) Remove
             td(
-                v-on:click="startGame(game)",
+                @click="startGame(game)",
                 v-if="!isMyOffer(game)"
             ) Join
     a(
         href="#",
-        v-on:click.prevent="createGame()",
+        @click.prevent="createGame()",
         v-if="!isGameOfferCreated()"
     ) Создать игру
 </template>

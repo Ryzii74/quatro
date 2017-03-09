@@ -3,15 +3,15 @@
         tr.row(v-for="row, rowIndex in field")
             td(
                 v-for="item, itemIndex in row",
-                v-on:click="makeMove(rowIndex, itemIndex)"
+                @click="makeMove(rowIndex, itemIndex)"
             )
-                div.item(v-bind:class=`[
+                div.item(:class=`[
                     (item && item.isRed) ? 'red' : 'green',
                     (item && item.isCircle) ? 'circle' : '',
                     (item && item.isBig) ? 'big' : '',
                     (!item) ? 'empty' : ''
                 ]`)
-                    div.item-inner(v-bind:class="(item && item.isEmpty) ? 'empty' : ''")
+                    div.item-inner(:class="{empty: item && item.isEmpty}")
 </template>
 
 <script>

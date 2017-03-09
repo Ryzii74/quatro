@@ -3,16 +3,16 @@
         tr.row(v-for="row, rowIndex in moves")
             td(
                 v-for="item, itemIndex in row",
-                v-on:click="selectMove(rowIndex, itemIndex)",
-                v-bind:class="(isItemSelected(rowIndex, itemIndex)) ? 'selected' : ''"
+                @click="selectMove(rowIndex, itemIndex)",
+                :class="(isItemSelected(rowIndex, itemIndex)) ? 'selected' : ''"
             )
-                div.item(v-bind:class=`[
+                div.item(:class=`[
                     (item && item.isRed) ? 'red' : 'green',
                     (item && item.isCircle) ? 'circle' : '',
                     (item && item.isBig) ? 'big' : '',
                     (!item) ? 'empty' : ''
                 ]`)
-                    div.item-inner(v-bind:class="(item && item.isEmpty) ? 'empty' : ''")
+                    div.item-inner(:class="(item && item.isEmpty) ? 'empty' : ''")
 
 </template>
 

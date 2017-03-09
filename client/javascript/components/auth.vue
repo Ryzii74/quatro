@@ -2,8 +2,8 @@
 div#auth
     input(v-model="login", placeholder="Login")
     input(type="password", v-model="password", placeholder="Password")
-    button(v-on:click.preventSubmit="logIn()") LogIn
-    button(v-on:click.preventSubmit="signUp()") SignUp
+    button(@click.preventSubmit="logIn()") LogIn
+    button(@click.preventSubmit="signUp()") SignUp
 </template>
 
 <script>
