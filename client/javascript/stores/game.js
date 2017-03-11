@@ -9,7 +9,7 @@ module.exports = {
         field: null,
         currentMove: null,
         isGameEnded: null,
-        isGameWined: null,
+        winLine: null,
         players: null,
         gameId: null
     },
@@ -19,7 +19,7 @@ module.exports = {
             state.moves = SharedGame.getDefaultMoves();
             state.field = SharedGame.getDefaultField();
             state.isGameEnded = false;
-            state.isGameWined = false;
+            state.winLine = null;
             state.currentMove = data.currentMove;
             state.players = data.players;
             state.gameId = data.gameId;
@@ -47,12 +47,12 @@ module.exports = {
         },
 
         setGameState(state, gameState) {
-            state.isGameWined = gameState.isGameWined;
+            state.winLine = gameState.winLine;
             state.isGameEnded = gameState.isGameEnded;
         },
 
-        gameWined(state) {
-            state.isGameWined = true;
+        gameWined(state, winLine) {
+            state.winLine = winLine;
         },
 
         gameEnded(state) {

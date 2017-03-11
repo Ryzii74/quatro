@@ -21,9 +21,9 @@ module.exports = socket => {
         const currentGame = GamesManager.get(data.gameId);
         data.gameState = currentGame.makeMove(data);
 
-        if (data.gameState.isGameWined || data.gameState.isGameEnded) {
+        if (data.gameState.winLine || data.gameState.isGameEnded) {
             let winner = null;
-            if (data.gameState.isGameWined) winner = socket.user.id;
+            if (data.gameState.winLine) winner = socket.user.id;
             GameLogs.save({
                 players: currentGame.players,
                 field: currentGame.field,

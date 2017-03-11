@@ -295,7 +295,7 @@ const FIELD = [
 
 module.exports = {
     isGameWined(field) {
-        let result = false;
+        let winLine = null;
 
         LINES.forEach(line => {
             const lineItems = getLineItems(field, line);
@@ -303,11 +303,13 @@ module.exports = {
 
             PROPS.forEach(prop => {
                 const itemWithPropCount = lineItems.filter(el => el[prop]).length;
-                if (itemWithPropCount % PROPS.length === 0) result = true;
+                if (itemWithPropCount % PROPS.length === 0) {
+                    winLine = line;
+                }
             });
         });
 
-        return result;
+        return winLine;
     },
     isGameEnded(field) {
         let result = true;

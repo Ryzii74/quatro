@@ -10,7 +10,8 @@
                     green: item && !item.isRed,
                     circle: item && item.isCircle,
                     big: item && item.isBig,
-                    empty: !item
+                    empty: !item,
+                    win: isCellWined(itemIndex, rowIndex)
                 }`)
                     div.item-inner(:class="{empty: item && item.isEmpty}")
 </template>
@@ -29,7 +30,8 @@
         computed: Vuex.mapState({
             selectedMove: state => state.game.selectedMove,
             field: state => state.game.field,
-            yourTurn: state => state.user.id === state.game.currentMove
+            yourTurn: state => state.user.id === state.game.currentMove,
+            winLine: state => state.game.winLine
         }),
         methods: {
             makeMove(rowIndex, itemIndex) {
@@ -63,6 +65,15 @@
             checkIsGameEnded() {
                 const isGameEnded = SharedGame.isGameEnded(this.field);
                 if (isGameEnded) this.$store.commit('gameEnded');
+            },
+            isCellWined(x, y) {
+                if (!this.winLine) return false;
+
+                let result = false;
+                this.winLine.forEach(el => {
+                    if (el.x === x && el.y === y) result = true;
+                });
+                return result;
             }
         }
     };

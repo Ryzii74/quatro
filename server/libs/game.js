@@ -21,7 +21,7 @@ class Game {
 
         return {
             isGameEnded: SharedGame.isGameEnded(this.field),
-            isGameWined: SharedGame.isGameWined(this.field)
+            winLine: SharedGame.isGameWined(this.field)
         }
     }
 

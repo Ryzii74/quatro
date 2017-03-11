@@ -21,7 +21,7 @@
         computed: Vuex.mapState({
             selectedMove: state => state.game.selectedMove,
             moves: state => state.game.moves,
-            isMoveAvailable: state => !state.game.isGameWined
+            isMoveAvailable: state => !state.game.winLine
                 && !state.game.isGameEnded
                 && state.game.currentMove === state.user.id
         }),
