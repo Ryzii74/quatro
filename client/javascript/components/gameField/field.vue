@@ -3,15 +3,15 @@
         tr.row(v-for="row, rowIndex in field")
             td(
                 v-for="item, itemIndex in row",
-                @click="makeMove(rowIndex, itemIndex)"
+                @click="makeMove(rowIndex, itemIndex)",
+                :class="{ win: isCellWined(rowIndex, itemIndex) }"
             )
                 div.item(:class=`{
                     red: item && item.isRed,
                     green: item && !item.isRed,
                     circle: item && item.isCircle,
                     big: item && item.isBig,
-                    empty: !item,
-                    win: isCellWined(rowIndex, itemIndex)
+                    empty: !item
                 }`)
                     div.item-inner(:class="{empty: item && item.isEmpty}")
 </template>
@@ -78,3 +78,8 @@
         }
     };
 </script>
+
+<style lang="stylus" scoped>
+#field .win
+    background-color #00f;
+</style>
