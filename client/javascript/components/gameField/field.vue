@@ -11,7 +11,7 @@
                     circle: item && item.isCircle,
                     big: item && item.isBig,
                     empty: !item,
-                    win: isCellWined(itemIndex, rowIndex)
+                    win: isCellWined(rowIndex, itemIndex)
                 }`)
                     div.item-inner(:class="{empty: item && item.isEmpty}")
 </template>
