@@ -2,7 +2,7 @@
 div
     div(
         @click="offerRevenge",
-        v-if="isGameEnded || !!winLine"
+        v-if="(isGameEnded || !!winLine) && !revenge"
     ) Реванш
     div(
         @click="cancelRevenge",
@@ -15,16 +15,38 @@ div
 </template>
 
 <script>
-
+    const Connection = require('../../libs/connection');
 
     module.exports = {
-        created: 
+        created() {
+            Connection.subscribe('cancelRevenge', err => {
+                if (err) {
+                    console.error('error opponent cancel revenge', err);
+                    return;
+                }
+
+                alert('Opponent cancel revenge');
+                this.$store.commit('revenge', null);
+            });
+            Connection.subscribe('offerRevenge', err => {
+                if (err) {
+                    console.error('error opponent cancel revenge', err);
+                    return;
+                }
+                this.$store.commit('revenge', 'get');
+            });
+        },
         computed: Vuex.mapState({
-            revenge: state => state.game.revenge
+            isGameEnded: state => state.game.isGameEnded,
+            winLine: state => state.game.winLine,
+            revenge: state => state.game.revenge,
+            opponent: state => state.game.players.find(
+                    el => el !== state.user.id
+                )
         }),
         methods: {
             offerRevenge() {
-                Connection.send('offerRevenge', {}, err => {
+                Connection.send('offerRevenge', { userId: this.opponent }, err => {
                     if (err) {
                         console.error('error offering revenge', err);
                         return;
@@ -35,19 +57,13 @@ div
             },
             cancelRevenge() {
                 this.$store.commit('revenge', null);
-                Connection.send('cancelRevenge', {}, err => {
-                    if (err) {
-                        console.error('error cancel revenge', err);
-                        return;
-                    }
+                Connection.send('cancelRevenge', { userId: this.opponent }, err => {
+                    if (err) console.error('error cancel revenge', err);
                 });
             },
             acceptRevenge() {
-                Connection.send('acceptRevenge', {}, err => {
-                    if (err) {
-                        console.error('error cancel revenge', err);
-                        return;
-                    }
+                Connection.send('acceptRevenge', { userId: this.opponent }, err => {
+                    if (err) console.error('error cancel revenge', err);
                 });
             }
         }

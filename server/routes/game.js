@@ -33,6 +33,7 @@ module.exports = socket => {
         if (data.gameState.winLine || data.gameState.isGameEnded) {
             let winner = null;
             if (data.gameState.winLine) winner = socket.user.id;
+            GamesManager.remove(currentGame.id);
             GameLogs.save({
                 players: currentGame.players,
                 field: currentGame.field,

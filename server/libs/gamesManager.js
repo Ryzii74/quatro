@@ -23,5 +23,9 @@ module.exports = {
 
     get(gameId) {
         return games[gameId];
+    },
+
+    remove(gameId) {
+        delete games[gameId];
     }
 };

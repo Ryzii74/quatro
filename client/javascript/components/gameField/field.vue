@@ -58,7 +58,10 @@
                     move: this.selectedMove,
                     gameId: this.$store.state.game.gameId
                 }, (err, data) => {
-                    if (err) return console.error(err);
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
                     this.$store.commit('setGameState', data.gameState);
                 });
 
