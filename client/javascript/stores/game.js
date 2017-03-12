@@ -11,7 +11,8 @@ module.exports = {
         isGameEnded: null,
         winLine: null,
         players: null,
-        gameId: null
+        gameId: null,
+        revenge: null
     },
 
     mutations: {
@@ -23,6 +24,7 @@ module.exports = {
             state.currentMove = data.currentMove;
             state.players = data.players;
             state.gameId = data.gameId;
+            state.revenge = null;
         },
 
         selectMove(state, data) {
@@ -57,6 +59,10 @@ module.exports = {
 
         gameEnded(state) {
             state.isGameEnded = true;
+        },
+
+        revenge(state, current) {
+            state.revenge = current;
         }
     }
 };

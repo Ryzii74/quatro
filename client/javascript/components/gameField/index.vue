@@ -3,17 +3,20 @@
         h1 {{getTurnHeader()}}
         field
         moves
+        revenge
 </template>
 
 <script>
     const gameMoves = require('./moves.vue');
     const gameField = require('./field.vue');
+    const revenge = require('./revenge.vue');
     const Connection = require('../../libs/connection');
 
     module.exports = {
         components: {
             moves: gameMoves,
-            field: gameField
+            field: gameField,
+            revenge
         },
         computed: Vuex.mapState({
             yourTurn: state => state.user.id === state.game.currentMove,
