@@ -29,6 +29,7 @@
         },
         computed: Vuex.mapState({
             selectedMove: state => state.game.selectedMove,
+            moves: state => state.game.moves,
             field: state => state.game.field,
             yourTurn: state => state.user.id === state.game.currentMove,
             winLine: state => state.game.winLine
@@ -36,13 +37,20 @@
         methods: {
             makeMove(rowIndex, itemIndex) {
                 if (!this.selectedMove) return;
-                if (this.field[rowIndex][itemIndex]) return;
-                if (!this.yourTurn) return;
-
                 const fieldCell = {
                     x: rowIndex,
                     y: itemIndex
                 };
+
+                if (!SharedGame.isMoveAvailable(
+                        this.selectedMove,
+                        fieldCell,
+                        this.field,
+                        this.moves
+                    )) return;
+                if (this.field[rowIndex][itemIndex]) return;
+                if (!this.yourTurn) return;
+
                 this.$store.commit('makeMove', fieldCell);
 
                 Connection.send('gameMove', {

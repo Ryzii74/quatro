@@ -341,5 +341,9 @@ module.exports = {
     makeMove(move, fieldCell, field, moves) {
         field[fieldCell.x].splice(fieldCell.y, 1, moves[move.x][move.y]);
         moves[move.x][move.y] = null;
+    },
+    isMoveAvailable(move, fieldCell, field, moves) {
+        return field[fieldCell.x][fieldCell.y] === null
+            && moves[move.x][move.y] !== null;
     }
 };

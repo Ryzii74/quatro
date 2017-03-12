@@ -19,6 +19,15 @@ module.exports = socket => {
 
     socket.on('gameMove', (data, callback) => {
         const currentGame = GamesManager.get(data.gameId);
+        if (!currentGame) return callback({
+            success: false,
+            error: 'game not found'
+        });
+        if (!currentGame.isMoveAvailable(data)) return callback({
+            success: false,
+            error: 'move not available'
+        });
+
         data.gameState = currentGame.makeMove(data);
 
         if (data.gameState.winLine || data.gameState.isGameEnded) {

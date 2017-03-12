@@ -32,6 +32,15 @@ class Game {
     getOpponent(userId) {
         return this.players.find(id => id !== userId);
     }
+
+    isMoveAvailable(data) {
+        return SharedGame.isMoveAvailable(
+            data.move,
+            data.fieldCell,
+            this.field,
+            this.moves
+        )
+    }
 }
 
 module.exports = Game;
