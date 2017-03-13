@@ -11,7 +11,12 @@ module.exports = {
             })
             .limit(20)
             .skip(skip || 0)
-            .toArray(callback);
+            .toArray((err, logs) => {
+                if (err) return callback(err);
+
+                //TODO: смапить имена игроков
+                callback(null, logs);
+            });
     },
 
     save(log) {

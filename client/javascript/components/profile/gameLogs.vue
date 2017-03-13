@@ -1,6 +1,7 @@
 <template lang="jade">
     div#gameLogs
-        p GameLogs
+        h1 GameLogs
+        p(v-for="log in gameLogs") {{log.winner === userId ? 'Win' : 'Lose'}} against {{log.opponent}}
 </template>
 
 <script>
@@ -12,6 +13,9 @@
                 gameLogs: []
             };
         },
+        computed: Vuex.mapState({
+            userId: state => state.user.id
+        }),
         created() {
             Connection.send('getGameLogs', {}, (err, data) => {
                 if (err) {
