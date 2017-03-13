@@ -7,6 +7,7 @@ div#gameOffers
         )
             td {{index + 1}}
             td {{game.login}}
+            td {{game.moveType}}
             td(
                 @click="removeMyOffer()",
                 v-if="isMyOffer(game)"
@@ -17,9 +18,19 @@ div#gameOffers
             ) Join
     a(
         href="#",
-        @click.prevent="createGame()",
+        @click.prevent="createGame('none')",
         v-if="!isGameOfferCreated()"
     ) Создать игру
+    a(
+        href="#",
+        @click.prevent="createGame('first')",
+        v-if="!isGameOfferCreated()"
+    ) Создать игру с первым ходом
+    a(
+        href="#",
+        @click.prevent="createGame('second')",
+        v-if="!isGameOfferCreated()"
+    ) Создать игру со вторым ходом
 </template>
 
 <script>
@@ -57,8 +68,11 @@ div#gameOffers
             isGameOfferCreated() {
                 return this.games.findIndex(this.isMyOffer) !== -1;
             },
-            createGame() {
-                Connection.send('createGameOffer', { type: 'test' }, (err, data) => {
+            createGame(moveType) {
+                Connection.send('createGameOffer', {
+                    type: 'test',
+                    moveType
+                }, (err, data) => {
                     if (err) {
                         console.error('error creating game', err);
                         return;

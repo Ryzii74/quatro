@@ -13,7 +13,7 @@ module.exports = socket => {
             error: 'game not found'
         });
 
-        GamesManager.create(data.userId, socket.user.id);
+        GamesManager.create(data.userId, socket.user.id, gameOffer.moveType);
         GamesOfferManager.remove(data.userId);
     });
 

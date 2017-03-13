@@ -4,8 +4,8 @@ const SocketServer = require('./socketServer');
 const games = {};
 
 module.exports = {
-    create(playerA, playerB) {
-        const game = new Game(playerA, playerB);
+    create(playerA, playerB, moveType) {
+        const game = new Game(playerA, playerB, moveType);
         games[game.id] = game;
 
         const data = {

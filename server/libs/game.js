@@ -1,11 +1,18 @@
 const uuid = require('node-uuid');
 const SharedGame = require('../../shared/game');
 
+function getCurrentMove(a, b, type) {
+    if (type === 'first') return a;
+    if (type === 'second') return b;
+
+    return (Math.random() < 0.5) ? a : b;
+}
+
 class Game {
-    constructor(playerA, playerB) {
+    constructor(playerA, playerB, moveType) {
         this.id = uuid.v4();
         this.players = [playerA, playerB];
-        this.currentMove = (Math.random() < 0.5) ? playerA : playerB;
+        this.currentMove = getCurrentMove(playerA, playerB, moveType);
         this.field = SharedGame.getDefaultField();
         this.moves = SharedGame.getDefaultMoves();
     }
