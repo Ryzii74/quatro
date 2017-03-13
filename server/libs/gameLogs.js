@@ -1,6 +1,11 @@
 const Db = require('./db');
+const PlayersManager = require('./playersManager');
 
 const LOGS_COLLECTION = 'logs';
+
+function getOpponent(userId, log) {
+    return log.players.find(player => player !== userId);
+}
 
 module.exports = {
     get(userId, skip, callback) {
@@ -14,8 +19,15 @@ module.exports = {
             .toArray((err, logs) => {
                 if (err) return callback(err);
 
-                //TODO: смапить имена игроков
-                callback(null, logs);
+                PlayersManager.getMany(logs.map(log => getOpponent(userId, log)), (err, players) => {
+                    if (err) return callback(err);
+
+                    logs.forEach(log => {
+                        const player = players.find(player => player._id.toString() === getOpponent(userId, log));
+                        log.opponent = player;
+                    });
+                    callback(null, logs);
+                });
             });
     },
 

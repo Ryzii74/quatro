@@ -1,7 +1,7 @@
 <template lang="jade">
     div#gameLogs
         h1 GameLogs
-        p(v-for="log in gameLogs") {{log.winner === userId ? 'Win' : 'Lose'}} against {{log.opponent}}
+        p(v-for="log in gameLogs") {{log.winner === userId ? 'Win' : 'Lose'}} against {{log.opponent.login}}
 </template>
 
 <script>
