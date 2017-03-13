@@ -4,19 +4,22 @@
         field
         moves
         revenge
+        chat
 </template>
 
 <script>
     const gameMoves = require('./moves.vue');
     const gameField = require('./field.vue');
     const revenge = require('./revenge.vue');
+    const chat = require('./chat.vue');
     const Connection = require('../../libs/connection');
 
     module.exports = {
         components: {
             moves: gameMoves,
             field: gameField,
-            revenge
+            revenge,
+            chat
         },
         computed: Vuex.mapState({
             yourTurn: state => state.user.id === state.game.currentMove,

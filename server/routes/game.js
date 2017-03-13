@@ -54,4 +54,17 @@ module.exports = socket => {
             }
         });
     });
+
+    socket.on('gameMessage', (data, callback) => {
+        SocketServer.send(data.to, 'newGameMessage', {
+            success: true,
+            data: {
+                text: data.text,
+                userId: socket.user.id,
+                login: socket.user.login
+            }
+        });
+
+        callback({ success: true });
+    });
 };

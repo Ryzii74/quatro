@@ -12,7 +12,8 @@ module.exports = {
         winLine: null,
         players: null,
         gameId: null,
-        revenge: null
+        revenge: null,
+        messages: []
     },
 
     mutations: {
@@ -25,6 +26,7 @@ module.exports = {
             state.players = data.players;
             state.gameId = data.gameId;
             state.revenge = null;
+            state.messages = [];
         },
 
         selectMove(state, data) {
@@ -63,6 +65,10 @@ module.exports = {
 
         revenge(state, current) {
             state.revenge = current;
+        },
+
+        addMessage(state, message) {
+            state.messages.push(message);
         }
     }
 };
