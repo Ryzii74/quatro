@@ -25,7 +25,7 @@ div
                     return;
                 }
 
-                alert('Opponent cancel revenge');
+                console.log('Opponent cancel revenge');
                 this.$store.commit('revenge', null);
             });
             Connection.subscribe('offerRevenge', err => {

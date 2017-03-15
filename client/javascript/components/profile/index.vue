@@ -34,7 +34,7 @@
             myId: state => state.user.id
         }),
         watch: {
-            '$route': 'getPlayerData'
+            $route: 'getPlayerData'
         },
         created() {
             this.getPlayerData();

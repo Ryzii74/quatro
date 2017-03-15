@@ -6,7 +6,10 @@
     const Connection = require('../../libs/connection');
 
     module.exports = {
-        props: [ 'isInFriends', 'userId' ],
+        props: [
+            'isInFriends',
+            'userId'
+        ],
         data() {
             return {
                 isInFriendsCache: this.isInFriends

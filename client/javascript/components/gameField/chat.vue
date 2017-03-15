@@ -33,7 +33,7 @@
         data() {
             return {
                 message: ''
-            }
+            };
         },
         methods: {
             sendMessage() {
