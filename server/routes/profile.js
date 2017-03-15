@@ -1,7 +1,7 @@
 const GameLogs = require('../libs/gameLogs');
 
 module.exports = socket => {
-    socket.on('getGameLogs', (data, callback) => {
+    socket.on('getPlayerProfile', (data, callback) => {
         if (!socket.user) return callback({
             success: false,
             error: 'need auth'
@@ -20,7 +20,10 @@ module.exports = socket => {
 
             callback({
                 success: true,
-                data: { logs }
+                data: {
+                    logs,
+                    userId
+                }
             });
         });
     });
