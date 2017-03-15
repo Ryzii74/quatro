@@ -9,7 +9,8 @@ module.exports = {
             { path: '/', component: MainPage },
             { path: '/game', component: GameField },
             { path: '/auth', component: Auth },
-            { path: '/profile', component: Profile }
+            { path: '/profile', component: Profile },
+            { path: '/profile/:id', component: Profile }
         ];
 
         return new VueRouter({
