@@ -5,24 +5,34 @@
             :logs="profile.logs",
             :userId="profile.userId"
         )
+        addToFriends(
+            v-if="profile.userId !== myId",
+            :isInFriends="isInFriends"
+        )
 </template>
 
 <script>
     const Connection = require('../../libs/connection');
     const gameLogs = require('./gameLogs.vue');
+    const addToFriends = require('./addToFriends.vue');
 
     module.exports = {
         components: {
-            gameLogs
+            gameLogs,
+            addToFriends
         },
         data() {
             return {
                 profile: {
                     logs: [],
-                    userId: ''
+                    userId: '',
+                    friends: []
                 }
             };
         },
+        computed: Vuex.mapState({
+            myId: state => state.user.id
+        }),
         watch: {
             '$route': 'getPlayerData'
         },
@@ -39,6 +49,9 @@
 
                     this.profile = data;
                 });
+            },
+            isInFriends() {
+                return true;
             }
         }
     };
