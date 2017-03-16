@@ -8,7 +8,8 @@
     module.exports = {
         props: [
             'isInFriends',
-            'userId'
+            'userId',
+            'login'
         ],
         data() {
             return {
@@ -20,7 +21,7 @@
                 return this.isInFriendsCache ? 'Remove from friends' : 'Add to friends';
             },
             act() {
-                Connection.send('friendAct', { userId: this.userId }, (err, data) => {
+                Connection.send('friendAct', { userId: this.userId, login: this.login }, (err, data) => {
                     if (err) {
                         console.error(err);
                         return;

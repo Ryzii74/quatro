@@ -15,5 +15,20 @@ module.exports = {
                 }
             )
             .toArray(callback)
+    },
+
+    updateFriends(userId, friends, callback) {
+        Db.get()
+            .collection('users')
+            .updateOne(
+            {
+                _id: ObjectId(userId)
+            }, {
+                $set: {
+                    friends: friends
+                }
+            },
+            callback
+        );
     }
 };

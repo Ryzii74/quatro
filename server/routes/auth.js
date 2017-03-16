@@ -8,7 +8,8 @@ function getHash(data) {
 function auth(socket, user, callback) {
     socket.user = {
         id: user._id.toString(),
-        login: user.login
+        login: user.login,
+        friends: user.friends
     };
     socket.join(socket.user.id);
     callback({
@@ -77,7 +78,8 @@ module.exports = socket => {
                 const user = {
                     login: data.login,
                     password: data.password,
-                    hash
+                    hash,
+                    friends: []
                 };
                 Db.get().collection('users').insertOne(user, (err, result) => {
                     if (err) {
