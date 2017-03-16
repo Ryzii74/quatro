@@ -17,6 +17,18 @@ module.exports = {
             .toArray(callback)
     },
 
+    getOne(id, projection, callback) {
+        Db.get()
+            .collection('users')
+            .findOne(
+                {
+                    _id: ObjectId(id)
+                },
+                projection,
+                callback
+            );
+    },
+
     updateFriends(userId, friends, callback) {
         Db.get()
             .collection('users')

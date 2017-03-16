@@ -2,7 +2,7 @@ const PlayersManager = require('../libs/playersManager');
 
 module.exports = socket => {
     socket.on('friendAct', (data, callback) => {
-        const friendIndex = socket.user.friends.findIndex(el => el.id === data.userId);
+        const friendIndex = socket.user.friends.findIndex(el => el.userId === data.userId);
         if (friendIndex) {
             socket.user.friends.push(data);
         } else {

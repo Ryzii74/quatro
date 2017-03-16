@@ -7,7 +7,13 @@
         )
         addToFriends(
             v-if="profile.userId !== myId",
-            :isInFriends="isInFriends"
+            :isInFriends="profile.isInFriends",
+            :userId="profile.userId",
+            :login="profile.login"
+        )
+        friends(
+            v-if="profile.userId === myId",
+            :friends="profile.friends"
         )
 </template>
 
@@ -15,18 +21,21 @@
     const Connection = require('../../libs/connection');
     const gameLogs = require('./gameLogs.vue');
     const addToFriends = require('./addToFriends.vue');
+    const friends = require('./friends.vue');
 
     module.exports = {
         components: {
             gameLogs,
-            addToFriends
+            addToFriends,
+            friends
         },
         data() {
             return {
                 profile: {
                     logs: [],
                     userId: '',
-                    friends: []
+                    friends: [],
+                    isInFriends: false
                 }
             };
         },
@@ -49,9 +58,6 @@
 
                     this.profile = data;
                 });
-            },
-            isInFriends() {
-                return true;
             }
         }
     };
