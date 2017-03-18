@@ -1,7 +1,8 @@
 <template lang="jade">
     div#friends
         h2 Friends
-        p(v-for="friend in friends") {{friend.login}}
+        p(v-for="friend in friends")
+            a(:href="'#/profile/' + friend.userId") {{friend.login}}
 </template>
 
 <script>
