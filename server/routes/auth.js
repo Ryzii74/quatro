@@ -1,5 +1,5 @@
 const async = require('async');
-const Db = require('../libs/db');
+const User = require('../models/user');
 
 function getHash(data) {
     return JSON.stringify(data);
@@ -22,32 +22,24 @@ function auth(socket, user, callback) {
     });
 }
 
-const INTERNAL_ERROR = 'внутренняя ошибка';
-
 module.exports = socket => {
     socket.on('login', (data, callback) => {
         data.hash = data.hash || getHash(data);
-        Db.get().collection('users').findOne({
-            hash: data.hash
-        }, (err, user) => {
-            if (err) {
-                console.error('error getting user data', err);
-                console.error(data);
-                return callback({
-                    success: false,
-                    error: INTERNAL_ERROR
-                });
-            }
+        User.findOne({
+                hash: data.hash
+            })
+            .exec((err, user) => {
+                if (err) return callback(err);
 
-            if (!user) {
-                return callback({
-                    success: false,
-                    error: 'Пользователь не найден'
-                });
-            }
+                if (!user) {
+                    return callback({
+                        success: false,
+                        error: 'Пользователь не найден'
+                    });
+                }
 
-            auth(socket, user, callback);
-        });
+                auth(socket, user, callback);
+            });
     });
 
     socket.on('logout', (data, callback) => {
@@ -62,40 +54,28 @@ module.exports = socket => {
         const hash = getHash(data);
 
         async.waterfall([
-            callback => Db.get().collection('users').findOne({
+            callback => User.findOne({
                 login: data.login
-            }, (err, user) => {
-                if (err) {
-                    console.error('error getting user with login', err);
-                    console.error(data);
-                    return callback(INTERNAL_ERROR);
-                }
-                if (user) return callback('пользователь с таким именем уже зарегистрирован');
-
-                callback();
+            }).exec((err, user) => {
+                if (user) err = 'пользователь с таким именем уже зарегистрирован';
+                callback(err);
             }),
             callback => {
-                const user = {
+                const user = new User({
                     login: data.login,
                     password: data.password,
-                    hash,
-                    friends: []
-                };
-                Db.get().collection('users').insertOne(user, (err, result) => {
-                    if (err) {
-                        console.error('error getting user with login', err);
-                        console.error(data);
-                        return callback(INTERNAL_ERROR);
-                    }
-                    user._id = result.insertedId;
-                    callback(null, user);
-                })
+                    hash
+                });
+                user.save(callback);
             }
         ], (err, user) => {
-            if (err) return callback({
-                success: false,
-                error: err
-            });
+            if (err) {
+                console.error(err);
+                return callback({
+                    success: false,
+                    error: err
+                });
+            }
 
             auth(socket, user, callback);
         });
