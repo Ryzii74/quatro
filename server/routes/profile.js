@@ -1,5 +1,5 @@
 const GameLogs = require('../libs/gameLogs');
-const PlayersManager = require('../libs/playersManager');
+const User = require('../models/user');
 
 module.exports = socket => {
     socket.on('getPlayerProfile', (data, callback) => {
@@ -19,7 +19,7 @@ module.exports = socket => {
                 return;
             }
             
-            PlayersManager.getOne(userId, { login: 1 }, (err, user) => {
+            User.getOne(userId, { login: 1 }, (err, user) => {
                 if (err) {
                     console.error("error getting user", err);
                     callback({

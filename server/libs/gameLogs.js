@@ -1,5 +1,5 @@
 const GameLog = require('../models/gameLogs');
-const PlayersManager = require('./playersManager');
+const User = require('../models/user');
 
 const LOGS_COLLECTION = 'logs';
 
@@ -18,7 +18,7 @@ module.exports = {
             .exec((err, logs) => {
                 if (err) return callback(err);
 
-                PlayersManager.getMany(logs.map(log => getOpponent(userId, log)), (err, players) => {
+                User.getMany(logs.map(log => getOpponent(userId, log)), (err, players) => {
                     if (err) return callback(err);
 
                     logs.forEach(log => {

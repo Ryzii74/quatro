@@ -1,5 +1,3 @@
-const PlayersManager = require('../libs/playersManager');
-
 module.exports = socket => {
     socket.on('friendAct', (data, callback) => {
         const friendIndex = socket.user.friends.findIndex(el => el.userId === data.userId);
@@ -9,7 +7,7 @@ module.exports = socket => {
             socket.user.friends.splice(friendIndex, 1);
         }
 
-        PlayersManager.updateFriends(socket.user.id, socket.user.friends, err => {
+        socket.user.save(err => {
             if (err) return callback({
                 success: false,
                 error: "error saving friends change"
