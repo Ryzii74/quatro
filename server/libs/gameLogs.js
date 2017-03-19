@@ -4,7 +4,7 @@ const User = require('../models/user');
 const LOGS_COLLECTION = 'logs';
 
 function getOpponent(userId, log) {
-    return log.players.find(player => player !== userId);
+    return log.players.find(player => player.toString() !== userId);
 }
 
 module.exports = {
@@ -21,9 +21,13 @@ module.exports = {
                 User.getMany(logs.map(log => getOpponent(userId, log)), (err, players) => {
                     if (err) return callback(err);
 
-                    logs.forEach(log => {
-                        const player = players.find(player => player._id.toString() === getOpponent(userId, log));
+                    logs.map(log => {
+                        const logObj = log.toObject();
+                        const player = players.find(
+                            player => player._id.toString() === getOpponent(userId, log).toString()
+                        );
                         log.opponent = player;
+                        return logObj;
                     });
                     callback(null, logs);
                 });

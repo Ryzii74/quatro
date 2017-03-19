@@ -8,7 +8,7 @@ module.exports = socket => {
             error: 'need auth'
         });
 
-        const userId = data.userId || socket.user.id;
+        const userId = data.userId || socket.user.id.toString();
         GameLogs.get(userId, data.skip, (err, logs) => {
             if (err) {
                 console.error("error getting logs", err);
