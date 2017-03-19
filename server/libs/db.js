@@ -1,14 +1,14 @@
-const MongoClient = require('mongodb').MongoClient;
+const Mongoose = require('mongoose');
 
 let db = null;
 
 module.exports.init = (config, callback) => {
-    MongoClient.connect(config.url, (err, instance) => {
-        if (err) return callback(err);
-
-        db = instance;
-        callback();
+    db = Mongoose.connect(config.url);
+    db.on('error', err => {
+        console.error('error connecting mongodb');
+        callback(err);
     });
+    db.once('open', callback);
 };
 
 module.exports.get = () => db;

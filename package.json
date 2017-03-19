@@ -23,6 +23,7 @@
     "express": "^4.14.1",
     "jade": "^1.11.0",
     "mongodb": "^2.2.24",
+    "mongoose": "^4.9.0",
     "node-uuid": "^1.4.7",
     "socket.io": "^1.7.3",
     "stylus": "^0.54.5",
