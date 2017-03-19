@@ -1,4 +1,4 @@
-const Db = require('./db');
+const GameLog = require('../models/gameLogs');
 const PlayersManager = require('./playersManager');
 
 const LOGS_COLLECTION = 'logs';
@@ -9,14 +9,13 @@ function getOpponent(userId, log) {
 
 module.exports = {
     get(userId, skip, callback) {
-        Db.get()
-            .collection(LOGS_COLLECTION)
+        GameLog
             .find({
                 players: userId
             })
             .limit(20)
             .skip(skip || 0)
-            .toArray((err, logs) => {
+            .exec((err, logs) => {
                 if (err) return callback(err);
 
                 PlayersManager.getMany(logs.map(log => getOpponent(userId, log)), (err, players) => {
@@ -31,13 +30,10 @@ module.exports = {
             });
     },
 
-    save(log) {
-        log.date = +new Date();
-
-        Db.get()
-            .collection(LOGS_COLLECTION)
-            .insertOne(log, err => {
-                if (err) console.error('error saving log', err);
-            });
+    save(data) {
+        const log = new GameLog(data);
+        log.save(err => {
+            if (err) console.error('error saving log', err);
+        });
     }
 };
