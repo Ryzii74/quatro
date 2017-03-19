@@ -1,6 +1,6 @@
 module.exports = socket => {
     socket.on('friendAct', (data, callback) => {
-        const friendIndex = socket.user.friends.findIndex(el => el.userId === data.userId);
+        const friendIndex = socket.user.friends.findIndex(el => el.userId.toString() === data.userId.toString());
         if (friendIndex) {
             socket.user.friends.push(data);
         } else {

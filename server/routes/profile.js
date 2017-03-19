@@ -36,7 +36,7 @@ module.exports = socket => {
                         login: user.login,
                         userId,
                         friends: (data.userId || socket.user.id) ? socket.user.friends : [],
-                        isInFriends: !!socket.user.friends.find(el => el.userId === userId)
+                        isInFriends: !!socket.user.friends.find(el => el.userId.toString() === userId.toString())
                     }
                 });
             });
