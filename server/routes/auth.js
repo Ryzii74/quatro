@@ -6,11 +6,7 @@ function getHash(data) {
 }
 
 function auth(socket, user, callback) {
-    socket.user = {
-        id: user._id.toString(),
-        login: user.login,
-        friends: user.friends
-    };
+    socket.user = user;
     socket.join(socket.user.id);
     callback({
         success: true,

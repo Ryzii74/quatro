@@ -2,7 +2,7 @@ const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
 
 module.exports = new Schema({
-    name: {
+    login: {
         type: String,
         required: true
     },
@@ -14,5 +14,14 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    friends: [ Schema.Types.ObjectId ]
+    friends: [{
+        userId: {
+            type: Schema.Types.ObjectId,
+            required: true
+        },
+        login: {
+            type: String,
+            required: true
+        }
+    }]
 });

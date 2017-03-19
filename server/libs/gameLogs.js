@@ -1,8 +1,6 @@
 const GameLog = require('../models/gameLogs');
 const User = require('../models/user');
 
-const LOGS_COLLECTION = 'logs';
-
 function getOpponent(userId, log) {
     return log.players.find(player => player.toString() !== userId);
 }
