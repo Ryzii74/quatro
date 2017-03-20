@@ -1,6 +1,7 @@
 <template lang="jade">
     div#gameField
         h1 {{getTurnHeader()}}
+        h2 {{gameTime.start}} + {{gameTime.move}}
         field
         moves
         revenge
@@ -12,7 +13,6 @@
     const gameField = require('./field.vue');
     const revenge = require('./revenge.vue');
     const chat = require('./chat.vue');
-    const Connection = require('../../libs/connection');
 
     module.exports = {
         components: {
@@ -24,7 +24,8 @@
         computed: Vuex.mapState({
             yourTurn: state => state.user.id === state.game.currentMove,
             isGameEnded: state => state.game.isGameEnded,
-            winLine: state => state.game.winLine
+            winLine: state => state.game.winLine,
+            gameTime: state => state.game.gameTime
         }),
         methods: {
             getTurnHeader() {

@@ -27,6 +27,7 @@ module.exports = {
             state.gameId = data.gameId;
             state.revenge = null;
             state.messages = [];
+            state.gameTime = data.gameTime;
         },
 
         selectMove(state, data) {
