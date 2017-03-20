@@ -45,7 +45,7 @@ div#gameOffers
                 Config.intervalUpdatingGameOffersList
             );
 
-            Connection.subscribe('startGame', (err, data) => {
+            Connection.subscribe('startGame', data => {
                 this.$store.commit('startGame', data);
                 this.$router.push('/game');
             });

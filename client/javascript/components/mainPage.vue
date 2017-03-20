@@ -15,7 +15,7 @@ div
             gameOffers
         },
         created() {
-            Connection.subscribe('socketsOnline', (err, data) => {
+            Connection.subscribe('socketsOnline', data => {
                 this.$store.commit('setPlayersOnline', data.count);
             });
         },

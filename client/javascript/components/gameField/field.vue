@@ -22,7 +22,7 @@
 
     module.exports = {
         created() {
-            Connection.subscribe('opponentMove', (err, data) => {
+            Connection.subscribe('opponentMove', data => {
                 this.$store.commit('opponentMove', data);
                 this.$store.commit('setGameState', data.gameState);
             });

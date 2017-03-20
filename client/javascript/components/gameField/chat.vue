@@ -13,13 +13,8 @@
 
     module.exports = {
         created() {
-            Connection.subscribe('newGameMessage', (err, message) => {
-                if (err) {
-                    console.error('get message error', err);
-                    return;
-                }
+            Connection.subscribe('newGameMessage', message => {
                 if (message.userId !== this.opponent) return;
-
                 this.$store.commit('addMessage', message);
             });
         },

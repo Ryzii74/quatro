@@ -5,8 +5,19 @@ function innerMessageHandler(callback) {
             callback(null, result.data);
         } else {
             console.error(result.error);
-            callback(result.error);
+            if (!breakOnError) callback(result.error);
         }
+    };
+}
+
+function innerMessageHandlerWithoutErrors(callback) {
+    return result => {
+        if (!result.success) {
+            console.error(result.error);
+            return;
+        }
+
+        callback(result.data);
     };
 }
 
@@ -25,7 +36,7 @@ class Connection {
     }
 
     subscribe(method, callback) {
-        this.socket.on(method, innerMessageHandler(callback));
+        this.socket.on(method, innerMessageHandlerWithoutErrors(callback));
     }
 }
 

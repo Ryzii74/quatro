@@ -19,20 +19,10 @@ div
 
     module.exports = {
         created() {
-            Connection.subscribe('cancelRevenge', err => {
-                if (err) {
-                    console.error('error opponent cancel revenge', err);
-                    return;
-                }
-
-                console.log('Opponent cancel revenge');
+            Connection.subscribe('cancelRevenge', () => {
                 this.$store.commit('revenge', null);
             });
-            Connection.subscribe('offerRevenge', err => {
-                if (err) {
-                    console.error('error opponent cancel revenge', err);
-                    return;
-                }
+            Connection.subscribe('offerRevenge', () => {
                 this.$store.commit('revenge', 'get');
             });
         },
