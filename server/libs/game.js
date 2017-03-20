@@ -9,12 +9,16 @@ function getCurrentMove(a, b, type) {
 }
 
 class Game {
-    constructor(playerA, playerB, moveType) {
+    constructor(playerA, playerB, moveType, gameTime) {
         this.id = uuid.v4();
         this.players = [playerA, playerB];
         this.currentMove = getCurrentMove(playerA, playerB, moveType);
         this.field = SharedGame.getDefaultField();
         this.moves = SharedGame.getDefaultMoves();
+        this.gameTime = gameTime || {
+            start: 120,
+            move: 10
+        };
     }
 
     makeMove(move) {

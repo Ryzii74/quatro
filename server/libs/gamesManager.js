@@ -13,7 +13,8 @@ module.exports = {
             data: {
                 gameId: game.id,
                 players: game.players,
-                currentMove: game.currentMove
+                currentMove: game.currentMove,
+                gameTime: game.gameTime
             }
         };
 
