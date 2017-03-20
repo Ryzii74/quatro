@@ -2,6 +2,7 @@
     div#gameField
         h1 {{getTurnHeader()}}
         h2 {{gameTime.start}} + {{gameTime.move}}
+        timers
         field
         moves
         revenge
@@ -13,13 +14,15 @@
     const gameField = require('./field.vue');
     const revenge = require('./revenge.vue');
     const chat = require('./chat.vue');
+    const timers = require('./timer.vue');
 
     module.exports = {
         components: {
             moves: gameMoves,
             field: gameField,
             revenge,
-            chat
+            chat,
+            timers
         },
         computed: Vuex.mapState({
             yourTurn: state => state.user.id === state.game.currentMove,
