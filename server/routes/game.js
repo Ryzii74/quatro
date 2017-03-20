@@ -1,7 +1,7 @@
 const GamesOfferManager = require('../libs/gamesOfferManager');
 const GamesManager = require('../libs/gamesManager');
 const SocketServer = require('../libs/socketServer');
-const GameLogs = require('../libs/gameLogs');
+const GameLog = require('../models/gameLogs');
 
 module.exports = socket => {
     socket.on('startGame', (data, callback) => {
@@ -34,11 +34,13 @@ module.exports = socket => {
             let winner = null;
             if (data.gameState.winLine) winner = socket.user.id;
             GamesManager.remove(currentGame.id);
-            GameLogs.save({
+
+            const log = new GameLog({
                 players: currentGame.players,
                 field: currentGame.field,
                 winner
             });
+            log.save(err => err && console.error('error saving log', err));
         }
 
         const opponent = currentGame.getOpponent(socket.user.id);

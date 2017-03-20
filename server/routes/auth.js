@@ -12,7 +12,7 @@ function auth(socket, user, callback) {
         success: true,
         data: {
             login: user.login,
-            id: socket.user.id,
+            id: user.id,
             hash: user.hash
         }
     });

@@ -1,4 +1,4 @@
-const GameLogs = require('../libs/gameLogs');
+const GameLog = require('../models/gameLogs')
 const User = require('../models/user');
 
 module.exports = socket => {
@@ -9,7 +9,7 @@ module.exports = socket => {
         });
 
         const userId = data.userId || socket.user.id.toString();
-        GameLogs.get(userId, data.skip, (err, logs) => {
+        GameLog.get(userId, data.skip, (err, logs) => {
             if (err) {
                 console.error("error getting logs", err);
                 callback({
