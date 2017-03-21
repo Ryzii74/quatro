@@ -10,16 +10,15 @@ function auth(socket, user, callback) {
     socket.user = user;
     socket.join(socket.user.id);
 
-    GamesManager.getByPlayer(socket.user.id.toString(), (err, game) => {
-        callback({
-            success: true,
-            data: {
-                login: user.login,
-                id: user.id,
-                hash: user.hash,
-                game: game
-            }
-        });
+    const gameId = GamesManager.getByPlayer(socket.user.id.toString());
+    callback({
+        success: true,
+        data: {
+            login: user.login,
+            id: user.id,
+            hash: user.hash,
+            game: gameId
+        }
     });
 }
 
