@@ -60,6 +60,10 @@ module.exports = {
             state.winLine = winLine;
         },
 
+        setCurrentGame(state, gameId) {
+            state.gameId = gameId;
+        },
+
         gameEnded(state) {
             state.isGameEnded = true;
         },

@@ -8,6 +8,12 @@ module.exports = {
             if (err) return;
 
             if (user && user.hash) Session.saveSession(user.hash);
+
+            if (user.game) {
+                Store.commit('setCurrentGame', user.game);
+                delete user.game;
+            }
+
             Store.commit('login', user);
 
             if (callback) callback(err, user);
