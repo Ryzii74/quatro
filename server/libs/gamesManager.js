@@ -22,6 +22,11 @@ module.exports = {
         SocketServer.send(playerB, 'startGame', data);
     },
 
+    getByPlayer(playerId) {
+        return Object.keys(games)
+            .find(gameId => games[gameId].players.indexOf(playerId) !== -1);
+    },
+
     get(gameId) {
         return games[gameId];
     },

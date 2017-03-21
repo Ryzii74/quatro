@@ -1,5 +1,6 @@
 const async = require('async');
 const User = require('../models/user');
+const GamesManager = require('../libs/gamesManager');
 
 function getHash(data) {
     return JSON.stringify(data);
@@ -8,13 +9,17 @@ function getHash(data) {
 function auth(socket, user, callback) {
     socket.user = user;
     socket.join(socket.user.id);
-    callback({
-        success: true,
-        data: {
-            login: user.login,
-            id: user.id,
-            hash: user.hash
-        }
+
+    GamesManager.getByPlayer(socket.user.id.toString(), (err, game) => {
+        callback({
+            success: true,
+            data: {
+                login: user.login,
+                id: user.id,
+                hash: user.hash,
+                game: game
+            }
+        });
     });
 }
 
