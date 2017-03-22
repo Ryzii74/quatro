@@ -37,6 +37,12 @@ module.exports = {
         makeMove(state, fieldCell) {
             SharedGame.makeMove(state.selectedMove, fieldCell, state.field, state.moves);
             state.currentMove = state.players.find(id => state.currentMove !== id);
+
+            const winLine = SharedGame.isGameWined(this.field);
+            if (winLine) state.winLine = winLine;
+
+            const isGameEnded = SharedGame.isGameEnded(this.field);
+            if (isGameEnded) state.isGameEnded = true;
         },
 
         opponentMove(state, data) {
@@ -56,16 +62,8 @@ module.exports = {
             state.isGameEnded = gameState.isGameEnded;
         },
 
-        gameWined(state, winLine) {
-            state.winLine = winLine;
-        },
-
         setCurrentGame(state, gameId) {
             state.gameId = gameId;
-        },
-
-        gameEnded(state) {
-            state.isGameEnded = true;
         },
 
         revenge(state, current) {

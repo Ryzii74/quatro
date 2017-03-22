@@ -66,16 +66,6 @@
                 });
 
                 this.$store.commit('clearSelectedMove');
-                this.checkIsGameWined();
-                this.checkIsGameEnded();
-            },
-            checkIsGameWined() {
-                const isGameWined = SharedGame.isGameWined(this.field);
-                if (isGameWined) this.$store.commit('gameWined');
-            },
-            checkIsGameEnded() {
-                const isGameEnded = SharedGame.isGameEnded(this.field);
-                if (isGameEnded) this.$store.commit('gameEnded');
             },
             isCellWined(x, y) {
                 if (!this.winLine) return false;
