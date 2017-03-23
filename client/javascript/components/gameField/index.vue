@@ -3,7 +3,7 @@
         h1 {{getTurnHeader()}}
         h2 {{gameTime.start}} + {{gameTime.move}}
         timers
-        field
+        field(:field="field")
         moves
         revenge
         chat
@@ -28,6 +28,7 @@
             yourTurn: state => state.user.id === state.game.currentMove,
             isGameEnded: state => state.game.isGameEnded,
             winLine: state => state.game.winLine,
+            field: state => state.game.field,
             gameTime: state => state.game.gameTime
         }),
         methods: {

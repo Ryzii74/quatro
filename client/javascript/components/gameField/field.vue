@@ -21,6 +21,7 @@
     const SharedGame = require('../../../../shared/game');
 
     module.exports = {
+        props: ['field'],
         created() {
             Connection.subscribe('opponentMove', data => {
                 this.$store.commit('opponentMove', data);
@@ -30,7 +31,6 @@
         computed: Vuex.mapState({
             selectedMove: state => state.game.selectedMove,
             moves: state => state.game.moves,
-            field: state => state.game.field,
             yourTurn: state => state.user.id === state.game.currentMove,
             winLine: state => state.game.winLine
         }),
