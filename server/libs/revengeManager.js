@@ -7,8 +7,8 @@ module.exports = {
             this.remove(from);
         });
         revenges[from] = {
-            to: to,
-            timeout
+            to,
+            timeout,
         };
     },
 
@@ -18,5 +18,5 @@ module.exports = {
 
         if (revenge.timeout) clearTimeout(revenge.timeout);
         delete revenges[from];
-    }
+    },
 };

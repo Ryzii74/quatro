@@ -8,10 +8,13 @@ module.exports = socket => {
         if (!socket.user) return;
 
         const gameOffer = GamesOfferManager.find(data.userId);
-        if (!gameOffer) return callback({
-            success: false,
-            error: 'game not found'
-        });
+        if (!gameOffer) {
+            callback({
+                success: false,
+                error: 'game not found',
+            });
+            return;
+        }
 
         GamesManager.create(data.userId, socket.user.id, gameOffer.moveType);
         GamesOfferManager.remove(data.userId);
@@ -19,14 +22,20 @@ module.exports = socket => {
 
     socket.on('gameMove', (data, callback) => {
         const currentGame = GamesManager.get(data.gameId);
-        if (!currentGame) return callback({
-            success: false,
-            error: 'game not found'
-        });
-        if (!currentGame.isMoveAvailable(data)) return callback({
-            success: false,
-            error: 'move not available'
-        });
+        if (!currentGame) {
+            callback({
+                success: false,
+                error: 'game not found',
+            });
+            return;
+        }
+        if (!currentGame.isMoveAvailable(data)) {
+            callback({
+                success: false,
+                error: 'move not available',
+            });
+            return;
+        }
 
         data.gameState = currentGame.makeMove(data);
 
@@ -38,7 +47,7 @@ module.exports = socket => {
             const log = new GameLog({
                 players: currentGame.players,
                 field: currentGame.field,
-                winner
+                winner,
             });
             log.save(err => err && console.error('error saving log', err));
         }
@@ -46,14 +55,14 @@ module.exports = socket => {
         const opponent = currentGame.getOpponent(socket.user.id);
         SocketServer.send(opponent, 'opponentMove', {
             success: true,
-            data
+            data,
         });
 
         callback({
             success: true,
             data: {
-                gameState: data.gameState
-            }
+                gameState: data.gameState,
+            },
         });
     });
 
@@ -63,8 +72,8 @@ module.exports = socket => {
             data: {
                 text: data.text,
                 userId: socket.user.id,
-                login: socket.user.login
-            }
+                login: socket.user.login,
+            },
         });
 
         callback({ success: true });

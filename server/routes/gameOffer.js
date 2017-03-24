@@ -5,18 +5,21 @@ module.exports = socket => {
         callback({
             success: true,
             data: {
-                games: GameOffers.get()
-            }
+                games: GameOffers.get(),
+            },
         });
     });
 
     socket.on('createGameOffer', (data, callback) => {
-        if (!socket.user) return callback({
-            success: true,
-            data: {
-                games: GameOffers.get()
-            }
-        });
+        if (!socket.user) {
+            callback({
+                success: true,
+                data: {
+                    games: GameOffers.get(),
+                },
+            });
+            return;
+        }
 
         data.login = socket.user.login;
         data.userId = socket.user.id;
@@ -25,8 +28,8 @@ module.exports = socket => {
         callback({
             success: true,
             data: {
-                games: GameOffers.get()
-            }
+                games: GameOffers.get(),
+            },
         });
     });
 
@@ -37,8 +40,8 @@ module.exports = socket => {
         callback({
             success: true,
             data: {
-                games: GameOffers.get()
-            }
+                games: GameOffers.get(),
+            },
         });
     });
 };

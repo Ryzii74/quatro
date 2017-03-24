@@ -17,7 +17,7 @@ class Game {
         this.moves = SharedGame.getDefaultMoves();
         this.gameTime = gameTime || {
             start: 120,
-            move: 10
+            move: 10,
         };
     }
 
@@ -27,13 +27,13 @@ class Game {
             move.move,
             move.fieldCell,
             this.field,
-            this.moves
+            this.moves,
         );
 
         return {
             isGameEnded: SharedGame.isGameEnded(this.field),
-            winLine: SharedGame.isGameWined(this.field)
-        }
+            winLine: SharedGame.isGameWined(this.field),
+        };
     }
 
     changeCurrentMove() {
@@ -49,8 +49,8 @@ class Game {
             data.move,
             data.fieldCell,
             this.field,
-            this.moves
-        )
+            this.moves,
+        );
     }
 }
 

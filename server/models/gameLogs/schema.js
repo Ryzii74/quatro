@@ -1,19 +1,20 @@
 const Mongoose = require('mongoose');
+
 const Schema = Mongoose.Schema;
 
 module.exports = new Schema({
     date: { type: Date, default: Date.now },
-    players: [ Schema.Types.ObjectId ],
+    players: [Schema.Types.ObjectId],
     field: {
         type: Schema.Types.Mixed,
-        required: true
+        required: true,
     },
     winner: {
         type: Schema.Types.ObjectId,
-        required: true
+        required: true,
     },
     opponent: {
         _id: Schema.Types.ObjectId,
-        login: String
-    }
+        login: String,
+    },
 });

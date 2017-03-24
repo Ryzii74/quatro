@@ -13,8 +13,8 @@ module.exports = {
         return {
             success: true,
             data: {
-                count: sockets
-            }
+                count: sockets,
+            },
         };
-    }
+    },
 };

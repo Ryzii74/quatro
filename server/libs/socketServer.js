@@ -1,11 +1,12 @@
 const SocketsOnline = require('./socketsOnline');
 const Router = require('../router');
 const GamesOfferManager = require('./gamesOfferManager');
+const socketIo = require('socket.io');
 
 let io = null;
 
 module.exports.init = (server, callback) => {
-    io = require('socket.io')(server);
+    io = socketIO(server);
 
     io.on('connection', socket => {
         socket.on('disconnect', () => {

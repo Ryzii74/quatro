@@ -17,8 +17,8 @@ function auth(socket, user, callback) {
             login: user.login,
             id: user.id,
             hash: user.hash,
-            game: gameId
-        }
+            game: gameId,
+        },
     });
 }
 
@@ -26,27 +26,31 @@ module.exports = socket => {
     socket.on('login', (data, callback) => {
         data.hash = data.hash || getHash(data);
         User.findOne({
-                hash: data.hash
-            })
-            .exec((err, user) => {
-                if (err) return callback(err);
+            hash: data.hash,
+        })
+        .exec((err, user) => {
+            if (err) {
+                callback(err);
+                return;
+            }
 
-                if (!user) {
-                    return callback({
-                        success: false,
-                        error: 'Пользователь не найден'
-                    });
-                }
+            if (!user) {
+                callback({
+                    success: false,
+                    error: 'Пользователь не найден',
+                });
+                return;
+            }
 
-                auth(socket, user, callback);
-            });
+            auth(socket, user, callback);
+        });
     });
 
     socket.on('logout', (data, callback) => {
         if (socket.user) socket.leave(socket.user.id);
         socket.user = null;
         callback({
-            success: true
+            success: true,
         });
     });
 
@@ -55,7 +59,7 @@ module.exports = socket => {
 
         async.waterfall([
             callback => User.findOne({
-                login: data.login
+                login: data.login,
             }).exec((err, user) => {
                 if (user) err = 'пользователь с таким именем уже зарегистрирован';
                 callback(err);
@@ -64,21 +68,21 @@ module.exports = socket => {
                 const user = new User({
                     login: data.login,
                     password: data.password,
-                    hash
+                    hash,
                 });
                 user.save(callback);
-            }
+            },
         ], (err, user) => {
             if (err) {
                 console.error(err);
-                return callback({
+                callback({
                     success: false,
-                    error: err
+                    error: err,
                 });
+                return;
             }
 
             auth(socket, user, callback);
         });
-
     });
 };

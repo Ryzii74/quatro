@@ -6,7 +6,10 @@ const Routes = [];
 module.exports.init = callback => {
     const routerFolder = Path.join(__dirname, 'routes');
     Fs.readdir(routerFolder, (err, files) => {
-        if (err) return callback(err);
+        if (err) {
+            callback(err);
+            return;
+        }
 
         files.forEach(file =>
             /* eslint-disable */

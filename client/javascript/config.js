@@ -1,3 +1,3 @@
 module.exports = {
-    intervalUpdatingGameOffersList: 3000
+    intervalUpdatingGameOffersList: 3000,
 };

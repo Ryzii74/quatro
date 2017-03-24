@@ -34,5 +34,5 @@ module.exports = {
             if (!err) Session.removeSession();
             callback(err, data);
         });
-    }
+    },
 };

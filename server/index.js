@@ -10,7 +10,7 @@ async.waterfall([
     Router.init,
     callback => Db.init(Config.db, callback),
     callback => ExpressServer.init(Config.httpServer, callback),
-    (server, callback) => SocketServer.init(server, callback)
+    (server, callback) => SocketServer.init(server, callback),
 ], err => {
     if (!err) return;
 

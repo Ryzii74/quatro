@@ -10,12 +10,12 @@ module.exports = {
             { path: '/game', component: GameField },
             { path: '/auth', component: Auth },
             { path: '/profile', component: Profile },
-            { path: '/profile/:id', component: Profile }
+            { path: '/profile/:id', component: Profile },
         ];
 
         return new VueRouter({
             // mode: 'history',
-            routes // сокращение от routes: routes
+            routes, // сокращение от routes: routes
         });
-    }
+    },
 };

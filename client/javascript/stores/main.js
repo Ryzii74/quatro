@@ -3,7 +3,7 @@ module.exports = {
 
     state: {
         games: [],
-        playersOnline: 0
+        playersOnline: 0,
     },
 
     mutations: {
@@ -13,6 +13,6 @@ module.exports = {
 
         setPlayersOnline(state, count) {
             state.playersOnline = count;
-        }
-    }
+        },
+    },
 };

@@ -19,7 +19,7 @@ Connection.init(() => {
         computed: Vuex.mapState({
             userId(state) {
                 return state.user.id;
-            }
+            },
         }),
         methods: {
             logout() {
@@ -31,10 +31,10 @@ Connection.init(() => {
 
                     this.$store.commit('logout');
                 });
-            }
+            },
         },
 
         store,
-        router
+        router,
     }).$mount('#app');
 });

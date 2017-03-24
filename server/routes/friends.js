@@ -1,6 +1,7 @@
 module.exports = socket => {
     socket.on('friendAct', (data, callback) => {
-        const friendIndex = socket.user.friends.findIndex(el => el.userId.toString() === data.userId.toString());
+        const friendIndex = socket.user.friends
+            .findIndex(el => el.userId.toString() === data.userId.toString());
         if (friendIndex) {
             socket.user.friends.push(data);
         } else {
@@ -8,13 +9,16 @@ module.exports = socket => {
         }
 
         socket.user.save(err => {
-            if (err) return callback({
-                success: false,
-                error: "error saving friends change"
-            });
+            if (err) {
+                callback({
+                    success: false,
+                    error: 'error saving friends change',
+                });
+                return;
+            }
 
             callback({
-                success: true
+                success: true,
             });
         });
     });

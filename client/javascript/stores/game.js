@@ -13,7 +13,7 @@ module.exports = {
         players: null,
         gameId: null,
         revenge: null,
-        messages: []
+        messages: [],
     },
 
     mutations: {
@@ -72,6 +72,6 @@ module.exports = {
 
         addMessage(state, message) {
             state.messages.push(message);
-        }
-    }
+        },
+    },
 };

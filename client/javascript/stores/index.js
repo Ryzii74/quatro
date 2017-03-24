@@ -6,6 +6,6 @@ module.exports = new Vuex.Store({
     modules: {
         game,
         main,
-        user
-    }
+        user,
+    },
 });

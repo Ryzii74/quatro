@@ -2,7 +2,7 @@ module.exports = {
     entry: './client/javascript/app.js',
     output: {
         path: './client/build',
-        filename: 'app.bundle.js'
+        filename: 'app.bundle.js',
     },
     module: {
         rules: [
@@ -12,13 +12,13 @@ module.exports = {
 
                 loader: 'eslint-loader',
                 options: {
-                    emitWarning: true
-                }
+                    emitWarning: true,
+                },
             },
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
-            }
-        ]
-    }
+                loader: 'vue-loader',
+            },
+        ],
+    },
 };

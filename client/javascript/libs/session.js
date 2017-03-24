@@ -11,5 +11,5 @@ module.exports = {
 
     getSession() {
         return localStorage.getItem(SESSION_KEY);
-    }
+    },
 };

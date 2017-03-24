@@ -6,7 +6,7 @@ module.exports.init = (config, callback) => {
     const server = Http.createServer(app);
 
     app.use(Express.static('client'));
-    server.listen(config.port, "localhost", (err) => {
+    server.listen(config.port, 'localhost', (err) => {
         callback(err, server);
     });
 };

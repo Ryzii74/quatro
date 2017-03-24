@@ -5,23 +5,28 @@ function getOpponent(userId, log) {
     return log.players.find(player => player.toString() !== userId);
 }
 
-Schema.statics.get = getGameLog;
 function getGameLog(userId, skip, callback) {
     this.find({
-        players: userId
+        players: userId,
     })
         .limit(20)
         .skip(skip || 0)
         .exec((err, logs) => {
-            if (err) return callback(err);
+            if (err) {
+                callback(err);
+                return;
+            }
 
             User.getMany(logs.map(log => getOpponent(userId, log)), (err, players) => {
-                if (err) return callback(err);
+                if (err) {
+                    callback(err);
+                    return;
+                }
 
                 logs.map(log => {
                     const logObj = log.toObject();
                     const player = players.find(
-                        player => player._id.toString() === getOpponent(userId, log).toString()
+                        player => player._id.toString() === getOpponent(userId, log).toString(),
                     );
                     log.opponent = player;
                     return logObj;
@@ -30,3 +35,4 @@ function getGameLog(userId, skip, callback) {
             });
         });
 }
+Schema.statics.get = getGameLog;

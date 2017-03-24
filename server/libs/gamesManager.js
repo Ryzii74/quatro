@@ -14,8 +14,8 @@ module.exports = {
                 gameId: game.id,
                 players: game.players,
                 currentMove: game.currentMove,
-                gameTime: game.gameTime
-            }
+                gameTime: game.gameTime,
+            },
         };
 
         SocketServer.send(playerA, 'startGame', data);
@@ -33,5 +33,5 @@ module.exports = {
 
     remove(gameId) {
         delete games[gameId];
-    }
+    },
 };

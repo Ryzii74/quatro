@@ -3,7 +3,7 @@ module.exports = {
 
     state: {
         id: null,
-        login: null
+        login: null,
     },
 
     mutations: {
@@ -15,6 +15,6 @@ module.exports = {
         logout(state) {
             state.login = null;
             state.id = null;
-        }
-    }
+        },
+    },
 };
