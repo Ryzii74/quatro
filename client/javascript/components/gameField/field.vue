@@ -17,56 +17,12 @@
 </template>
 
 <script>
-    const Connection = require('../../libs/connection');
-    const SharedGame = require('../../../../shared/game');
-
     module.exports = {
-        props: ['field'],
-        created() {
-            Connection.subscribe('opponentMove', data => {
-                this.$store.commit('opponentMove', data);
-                this.$store.commit('setGameState', data.gameState);
-            });
-        },
+        props: ['field', 'makeMove', 'winLine'],
         computed: Vuex.mapState({
-            selectedMove: state => state.game.selectedMove,
-            moves: state => state.game.moves,
-            yourTurn: state => state.user.id === state.game.currentMove,
             winLine: state => state.game.winLine
         }),
         methods: {
-            makeMove(rowIndex, itemIndex) {
-                if (!this.selectedMove) return;
-                const fieldCell = {
-                    x: rowIndex,
-                    y: itemIndex
-                };
-
-                if (!SharedGame.isMoveAvailable(
-                        this.selectedMove,
-                        fieldCell,
-                        this.field,
-                        this.moves
-                    )) return;
-                if (this.field[rowIndex][itemIndex]) return;
-                if (!this.yourTurn) return;
-
-                this.$store.commit('makeMove', fieldCell);
-
-                Connection.send('gameMove', {
-                    fieldCell,
-                    move: this.selectedMove,
-                    gameId: this.$store.state.game.gameId
-                }, (err, data) => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                    this.$store.commit('setGameState', data.gameState);
-                });
-
-                this.$store.commit('clearSelectedMove');
-            },
             isCellWined(x, y) {
                 if (!this.winLine) return false;
 
