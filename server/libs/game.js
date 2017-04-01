@@ -27,7 +27,7 @@ class Game {
             move.move,
             move.fieldCell,
             this.field,
-            this.moves,
+            this.moves
         );
 
         return {
@@ -49,7 +49,7 @@ class Game {
             data.move,
             data.fieldCell,
             this.field,
-            this.moves,
+            this.moves
         );
     }
 }

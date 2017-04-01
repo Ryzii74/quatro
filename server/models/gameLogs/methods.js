@@ -26,7 +26,7 @@ function getGameLog(userId, skip, callback) {
                 logs.map(log => {
                     const logObj = log.toObject();
                     const player = players.find(
-                        player => player._id.toString() === getOpponent(userId, log).toString(),
+                        player => player._id.toString() === getOpponent(userId, log).toString()
                     );
                     log.opponent = player;
                     return logObj;

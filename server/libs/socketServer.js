@@ -6,7 +6,7 @@ const socketIo = require('socket.io');
 let io = null;
 
 module.exports.init = (server, callback) => {
-    io = socketIO(server);
+    io = socketIo(server);
 
     io.on('connection', socket => {
         socket.on('disconnect', () => {
