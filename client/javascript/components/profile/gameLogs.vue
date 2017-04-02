@@ -1,17 +1,23 @@
 <template lang="jade">
     div#gameLogs
         h1 GameLogs
-        p(v-for="log in logs")
+        div(v-for="log in logs")
             | {{log.winner === userId ? 'Win' : 'Lose'}} against
             a(:href="'#/profile/' + log.opponent._id") {{log.opponent.login}}
+            gameField(:field="log.field")
 </template>
 
 <script>
+    const gameField = require('../gameField/field.vue');
+
     module.exports = {
         props: [
             'logs',
             'userId'
-        ]
+        ],
+        components: {
+            gameField
+        }
     };
 </script>
 
