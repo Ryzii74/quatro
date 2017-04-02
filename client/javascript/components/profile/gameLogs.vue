@@ -4,7 +4,8 @@
         div(v-for="log in logs")
             | {{log.winner === userId ? 'Win' : 'Lose'}} against
             a(:href="'#/profile/' + log.opponent._id") {{log.opponent.login}}
-            gameField(:field="log.field")
+            div#gameField
+                gameField(:field="log.field")
 </template>
 
 <script>
