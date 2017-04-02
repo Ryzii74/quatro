@@ -3,7 +3,7 @@
         tr.row(v-for="row, rowIndex in field")
             td(
                 v-for="item, itemIndex in row",
-                @click="makeMove(rowIndex, itemIndex)",
+                @click="makeMove && makeMove(rowIndex, itemIndex)",
                 :class="{ win: isCellWined(rowIndex, itemIndex) }"
             )
                 div.item(:class=`{
