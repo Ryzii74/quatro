@@ -5,7 +5,7 @@ module.exports = {
     add(from, to) {
         const timeout = setTimeout(() => {
             this.remove(from);
-        });
+        }, REVENGE_TIME);
         revenges[from] = {
             to,
             timeout,

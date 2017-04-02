@@ -1,3 +1,4 @@
+const async = require('async');
 const GameLog = require('../models/gameLogs');
 const User = require('../models/user');
 
@@ -12,39 +13,32 @@ module.exports = socket => {
         }
 
         const userId = data.userId || socket.user.id.toString();
-        GameLog.get(userId, data.skip, (err, logs) => {
+        async.waterfall([
+            callback => GameLog.get(userId, data.skip, callback),
+            (logs, callback) => User.getOne(userId, { login: 1 }, (err, user) => {
+                callback(err, user, logs);
+            }),
+        ], (err, user, logs) => {
             if (err) {
-                console.error('error getting logs', err);
+                console.error(err);
                 callback({
                     success: false,
-                    error: 'error getting logs',
+                    error: 'some error',
                 });
-                return;
             }
 
-            User.getOne(userId, { login: 1 }, (err, user) => {
-                if (err) {
-                    console.error('error getting user', err);
-                    callback({
-                        success: false,
-                        error: 'error getting user',
-                    });
-                    return;
-                }
-
-                const friends = (data.userId || socket.user.id) ? socket.user.friends : [];
-                const isInFriends = !!friends
-                    .find(el => el.userId.toString() === userId.toString());
-                callback({
-                    success: true,
-                    data: {
-                        logs,
-                        login: user.login,
-                        userId,
-                        friends,
-                        isInFriends,
-                    },
-                });
+            const friends = (data.userId || socket.user.id) ? socket.user.friends : [];
+            const isInFriends = !!friends
+                .find(el => el.userId.toString() === userId.toString());
+            callback({
+                success: true,
+                data: {
+                    logs,
+                    login: user.login,
+                    userId,
+                    friends,
+                    isInFriends,
+                },
             });
         });
     });
