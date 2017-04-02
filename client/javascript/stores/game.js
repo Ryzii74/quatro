@@ -35,7 +35,12 @@ module.exports = {
         },
 
         makeMove(state, fieldCell) {
-            SharedGame.makeMove(state.selectedMove, fieldCell, state.field, state.moves);
+            SharedGame.makeMove({
+                move: state.selectedMove,
+                fieldCell,
+                field: state.field,
+                moves: state.moves,
+            });
             state.currentMove = state.players.find(id => state.currentMove !== id);
 
             const winLine = SharedGame.isGameWined(state.field);

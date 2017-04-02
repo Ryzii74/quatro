@@ -23,12 +23,12 @@ class Game {
 
     makeMove(move) {
         this.changeCurrentMove();
-        SharedGame.makeMove(
-            move.move,
-            move.fieldCell,
-            this.field,
-            this.moves
-        );
+        SharedGame.makeMove({
+            move: move.move,
+            fieldCell: move.fieldCell,
+            field: this.field,
+            moves: this.moves,
+        });
 
         return {
             isGameEnded: SharedGame.isGameEnded(this.field),
@@ -45,12 +45,12 @@ class Game {
     }
 
     isMoveAvailable(data) {
-        return SharedGame.isMoveAvailable(
-            data.move,
-            data.fieldCell,
-            this.field,
-            this.moves
-        );
+        return SharedGame.isMoveAvailable({
+            move: data.move,
+            fieldCell: data.fieldCell,
+            field: this.field,
+            moves: this.moves,
+        });
     }
 }
 

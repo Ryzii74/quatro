@@ -54,7 +54,12 @@
                 };
                 const move = this.selectedMove;
 
-                if (!SharedGame.isMoveAvailable(move, fieldCell, this.field, this.moves)) {
+                if (!SharedGame.isMoveAvailable({
+                    move,
+                    fieldCell,
+                    field: this.field,
+                    moves: this.moves,
+                })) {
                     return;
                 }
                 if (this.field[rowIndex][itemIndex]) return;

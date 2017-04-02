@@ -1,8 +1,8 @@
 const User = require('../user');
 const Schema = require('./schema');
 
-function getOpponent(userId, log) {
-    return log.players.find(player => player.toString() !== userId);
+function opponent(userId, log) {
+    return log.players.find(player => player.toString() !== userId).toString();
 }
 
 function getGameLog(userId, skip, callback) {
@@ -17,7 +17,7 @@ function getGameLog(userId, skip, callback) {
                 return;
             }
 
-            User.getMany(logs.map(log => getOpponent(userId, log)), (err, players) => {
+            User.getMany(logs.map(log => opponent(userId, log)), (err, players) => {
                 if (err) {
                     callback(err);
                     return;
@@ -25,10 +25,7 @@ function getGameLog(userId, skip, callback) {
 
                 logs.map(log => {
                     const logObj = log.toObject();
-                    const player = players.find(
-                        player => player._id.toString() === getOpponent(userId, log).toString()
-                    );
-                    log.opponent = player;
+                    log.opponent = players.find(el => el._id.toString() === opponent(userId, log));
                     return logObj;
                 });
                 callback(null, logs);
