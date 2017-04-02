@@ -49,6 +49,6 @@
 </script>
 
 <style lang="stylus" scoped>
-#field #moves .selected
-    background-color #600013;
+#gameField #moves .selected
+    background-color #600013
 </style>
