@@ -48,6 +48,7 @@ module.exports = socket => {
                 players: currentGame.players,
                 field: currentGame.field,
                 winner,
+                winLine: data.gameState.winLine,
             });
             log.save(err => err && console.error('error saving log', err));
         }

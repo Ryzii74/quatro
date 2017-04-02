@@ -5,7 +5,10 @@
             | {{log.winner === userId ? 'Win' : 'Lose'}} against
             a(:href="'#/profile/' + log.opponent._id") {{log.opponent.login}}
             div#gameField
-                gameField(:field="log.field")
+                gameField(
+                    :field="log.field",
+                    :winLine="log.winLine"
+                )
 </template>
 
 <script>

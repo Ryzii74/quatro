@@ -17,4 +17,5 @@ module.exports = new Schema({
         _id: Schema.Types.ObjectId,
         login: String,
     },
+    winLine: [Schema.Types.Mixed],
 });
