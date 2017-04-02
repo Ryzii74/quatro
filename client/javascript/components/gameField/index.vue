@@ -20,6 +20,7 @@
     const chat = require('./chat.vue');
     const timers = require('./timer.vue');
     const Connection = require('../../libs/connection');
+    const SharedGame = require('../../../../shared/game');
 
     module.exports = {
         components: {
