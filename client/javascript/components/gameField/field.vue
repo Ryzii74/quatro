@@ -19,18 +19,10 @@
 <script>
     module.exports = {
         props: ['field', 'makeMove', 'winLine'],
-        computed: Vuex.mapState({
-            winLine: state => state.game.winLine,
-        }),
         methods: {
             isCellWined(x, y) {
                 if (!this.winLine) return false;
-
-                let result = false;
-                this.winLine.forEach(el => {
-                    if (el.x === x && el.y === y) result = true;
-                });
-                return result;
+                return this.winLine.some(el => el.x === x && el.y === y);
             },
         },
     };
