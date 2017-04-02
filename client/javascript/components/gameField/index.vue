@@ -27,7 +27,7 @@
             field: gameField,
             revenge,
             chat,
-            timers
+            timers,
         },
         computed: Vuex.mapState({
             yourTurn: state => state.user.id === state.game.currentMove,
@@ -49,15 +49,13 @@
                 if (!this.selectedMove) return;
                 const fieldCell = {
                     x: rowIndex,
-                    y: itemIndex
+                    y: itemIndex,
                 };
+                const move = this.selectedMove;
 
-                if (!SharedGame.isMoveAvailable(
-                        this.selectedMove,
-                        fieldCell,
-                        this.field,
-                        this.moves
-                    )) return;
+                if (!SharedGame.isMoveAvailable(move, fieldCell, this.field, this.moves)) {
+                    return;
+                }
                 if (this.field[rowIndex][itemIndex]) return;
                 if (!this.yourTurn) return;
 
@@ -65,8 +63,8 @@
 
                 Connection.send('gameMove', {
                     fieldCell,
-                    move: this.selectedMove,
-                    gameId: this.$store.state.game.gameId
+                    move,
+                    gameId: this.$store.state.game.gameId,
                 }, (err, data) => {
                     if (err) {
                         console.error(err);
@@ -83,10 +81,57 @@
                 }
                 if (this.isGameEnded) return 'Игра окончена! Ничья!';
                 return this.yourTurn ? 'Ваш ход' : 'Ход противника';
-            }
-        }
+            },
+        },
     };
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
+#gameField
+    .win
+        background-color #00f
+
+    table td
+        border 1px solid #000
+        padding 10px
+
+    .item
+        width 25px
+        height 25px
+        position relative
+        margin-left 12px
+        margin-bottom 12px
+
+        &.big
+            width 50px
+            height 50px
+            margin-left 0
+            margin-bottom 0
+
+        &.green
+            background-color #0f0
+
+        &.red
+            background-color #f00
+
+        &.empty
+            width 38px
+            height 38px
+            background-color #fff
+
+    .item.circle,
+    .circle .item-inner.empty
+        border-radius 50%
+
+    .item-inner.empty
+        position relative
+        background-color #fff
+        width 15px
+        height 15px
+        left 5px
+        top 5px
+
+    .big .item-inner.empty
+        width 40px
+        height 40px
 </style>

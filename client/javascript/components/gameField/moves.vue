@@ -23,7 +23,7 @@
             moves: state => state.game.moves,
             isMoveAvailable: state => !state.game.winLine
                 && !state.game.isGameEnded
-                && state.game.currentMove === state.user.id
+                && state.game.currentMove === state.user.id,
         }),
         methods: {
             isItemSelected(rowIndex, itemIndex) {
@@ -41,9 +41,14 @@
 
                 this.$store.commit('selectMove', {
                     x: rowIndex,
-                    y: itemIndex
+                    y: itemIndex,
                 });
-            }
-        }
+            },
+        },
     };
 </script>
+
+<style lang="stylus" scoped>
+#field #moves .selected
+    background-color #600013;
+</style>

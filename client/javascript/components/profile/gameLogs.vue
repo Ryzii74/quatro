@@ -13,11 +13,11 @@
     module.exports = {
         props: [
             'logs',
-            'userId'
+            'userId',
         ],
         components: {
-            gameField
-        }
+            gameField,
+        },
     };
 </script>
 
