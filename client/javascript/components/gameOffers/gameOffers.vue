@@ -68,7 +68,7 @@ div#gameOffers
                         return;
                     }
 
-                    this.$store.commit('initGamesList', data.games);
+                    this.games = data.games;
                 });
             },
             getGames() {
@@ -78,7 +78,7 @@ div#gameOffers
                         return;
                     }
 
-                    this.$store.commit('initGamesList', data.games);
+                    this.games = data.games;
                 });
             },
             clearIntervalGameOffersUpdating() {
