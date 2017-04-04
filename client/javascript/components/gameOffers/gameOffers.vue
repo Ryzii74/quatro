@@ -41,15 +41,18 @@ div#gameOffers
             });
         },
         computed: Vuex.mapState({
-            games: state => state.main.games,
             userId: state => state.user.id,
         }),
+        data() {
+            return {
+                games: [],
+            };
+        },
         methods: {
             removeMyOffer() {
-                Connection.send('removeGameOffer', {}, (err, data) => {
+                Connection.send('removeGameOffer', {}, (err, { games }) => {
                     if (err) return;
-
-                    this.$store.commit('initGamesList', data.games);
+                    this.games = games;
                 });
             },
             isGameOfferCreated() {
