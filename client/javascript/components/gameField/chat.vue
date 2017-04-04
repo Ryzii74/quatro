@@ -15,11 +15,10 @@
         created() {
             Connection.subscribe('newGameMessage', message => {
                 if (message.userId !== this.opponent) return;
-                this.$store.commit('addMessage', message);
+                this.addMessage(message);
             });
         },
         computed: Vuex.mapState({
-            messages: state => state.game.messages,
             opponent: state => state.game.players.find(
                     el => el !== state.user.id
                 ),
@@ -27,12 +26,13 @@
         }),
         data() {
             return {
+                messages: [],
                 message: ''
             };
         },
         methods: {
             sendMessage() {
-                this.$store.commit('addMessage', {
+                this.addMessage({
                     login: this.me,
                     text: this.message
                 });
@@ -44,6 +44,10 @@
                 });
 
                 this.message = '';
+            },
+
+            addMessage(message) {
+                this.messages.push(message);
             }
         }
     };
