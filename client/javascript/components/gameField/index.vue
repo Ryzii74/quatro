@@ -20,7 +20,7 @@
     const gameMoves = require('./moves.vue');
     const gameField = require('./field.vue');
     const revenge = require('./revenge.vue');
-    const chat = require('./chat.vue');
+    const chat = require('./../chat/chat.vue');
     const timers = require('./timer.vue');
     const Connection = require('../../libs/connection');
     const SharedGame = require('../../../../shared/game');
@@ -41,6 +41,7 @@
             gameTime: state => state.game.gameTime,
             selectedMove: state => state.game.selectedMove,
             moves: state => state.game.moves,
+            isGameStopped: state => state.game.winLine || state.game.isGameEnded,
         }),
         created() {
             Connection.subscribe('opponentMove', data => {

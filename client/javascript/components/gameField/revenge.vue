@@ -30,9 +30,7 @@ div
             isGameEnded: state => state.game.isGameEnded,
             winLine: state => state.game.winLine,
             revenge: state => state.game.revenge,
-            opponent: state => state.game.players.find(
-                    el => el !== state.user.id
-                )
+            opponent: state => state.game.players.find(el => el !== state.user.id),
         }),
         methods: {
             offerRevenge() {
@@ -55,7 +53,7 @@ div
                 Connection.send('acceptRevenge', { userId: this.opponent }, err => {
                     if (err) console.error('error cancel revenge', err);
                 });
-            }
-        }
+            },
+        },
     };
 </script>

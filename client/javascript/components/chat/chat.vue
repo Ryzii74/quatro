@@ -1,17 +1,20 @@
 <template lang="jade">
     div#chat
-        p(v-for="message in messages") {{message.login}}: {{message.text}}
-        input(
-            v-model="message",
-            placeholder="Введите сообщение",
-            @keyup.enter="sendMessage"
-        )
+        p(v-for="message in messages")
+            message(:login="message.login", :text="message.text")
+        addMessageForm(:sendMessage="sendMessage")
 </template>
 
 <script>
     const Connection = require('../../libs/connection');
+    const addMessageForm = require('./addMessageForm.vue');
+    const message = require('./message.vue');
 
     module.exports = {
+        components: {
+            addMessageForm,
+            message,
+        },
         created() {
             Connection.subscribe('newGameMessage', message => {
                 if (message.userId !== this.opponent) return;
@@ -19,36 +22,31 @@
             });
         },
         computed: Vuex.mapState({
-            opponent: state => state.game.players.find(
-                    el => el !== state.user.id
-                ),
-            me: state => state.user.login
+            opponent: state => state.game.players.find(el => el !== state.user.id),
+            me: state => state.user.login,
         }),
         data() {
-            return {
-                messages: [],
-                message: ''
-            };
+            return { messages: [] };
         },
         methods: {
-            sendMessage() {
+            sendMessage(text) {
+                console.log(text);
                 this.addMessage({
                     login: this.me,
-                    text: this.message
+                    text,
                 });
+                console.log(this.messages);
                 Connection.send('gameMessage', {
-                    text: this.message,
-                    to: this.opponent
+                    text,
+                    to: this.opponent,
                 }, err => {
                     if (err) console.error('error sending message', err);
                 });
-
-                this.message = '';
             },
 
             addMessage(message) {
                 this.messages.push(message);
-            }
-        }
+            },
+        },
     };
 </script>
