@@ -23,8 +23,8 @@
             isCellWined(x, y) {
                 if (!this.winLine) return false;
                 return this.winLine.some(el => el.x === x && el.y === y);
-            },
-        },
+            }
+        }
     };
 </script>
 

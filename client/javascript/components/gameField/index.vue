@@ -8,7 +8,10 @@
             :winLine="winLine",
             :makeMove="makeMove"
         )
-        moves
+        moves(
+            :isGameStopped="isGameStopped",
+            :moves="moves"
+        )
         revenge
         chat
 </template>

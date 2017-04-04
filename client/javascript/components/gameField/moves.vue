@@ -18,11 +18,10 @@
 
 <script>
     module.exports = {
+        props: ['moves', 'isGameStopped'],
         computed: Vuex.mapState({
             selectedMove: state => state.game.selectedMove,
-            moves: state => state.game.moves,
-            isMoveAvailable: state => !state.game.winLine
-                && !state.game.isGameEnded
+            isMoveAvailable: state => !this.isGameStopped
                 && state.game.currentMove === state.user.id,
         }),
         methods: {
