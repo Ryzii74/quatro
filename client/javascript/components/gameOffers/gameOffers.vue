@@ -1,21 +1,9 @@
 <template lang="jade">
 div#gameOffers
-    table
-        tr(
-            v-for="game, index in games",
-            :class="isMyOffer(game) ? 'my' : ''"
-        )
-            td {{index + 1}}
-            td {{game.login}}
-            td {{game.moveType}}
-            td(
-                @click="removeMyOffer()",
-                v-if="isMyOffer(game)"
-            ) Remove
-            td(
-                @click="startGame(game)",
-                v-if="!isMyOffer(game)"
-            ) Join
+    offersList(
+        :games="games",
+        :removeMyOffer="removeMyOffer"
+    )
     a(
         href="#",
         @click.prevent="createGame('none')",
@@ -34,16 +22,18 @@ div#gameOffers
 </template>
 
 <script>
-    const Connection = require('../libs/connection');
-    const Config = require('../config');
+    const Connection = require('../../libs/connection');
+    const Config = require('../../config');
+    const offersList = require('./list.vue');
 
     module.exports = {
+        components: {
+            offersList,
+        },
         created() {
             this.getGames();
-            this.intervalGameOffersUpdating = setInterval(
-                this.getGames.bind(this),
-                Config.intervalUpdatingGameOffersList
-            );
+            const timeout = Config.intervalUpdatingGameOffersList;
+            this.intervalGameOffersUpdating = setInterval(this.getGames.bind(this), timeout);
 
             Connection.subscribe('startGame', data => {
                 this.$store.commit('startGame', data);
@@ -52,7 +42,7 @@ div#gameOffers
         },
         computed: Vuex.mapState({
             games: state => state.main.games,
-            userId: state => state.user.id
+            userId: state => state.user.id,
         }),
         methods: {
             removeMyOffer() {
@@ -62,16 +52,13 @@ div#gameOffers
                     this.$store.commit('initGamesList', data.games);
                 });
             },
-            isMyOffer(game) {
-                return game.userId === this.userId;
-            },
             isGameOfferCreated() {
                 return this.games.findIndex(this.isMyOffer) !== -1;
             },
             createGame(moveType) {
                 Connection.send('createGameOffer', {
                     type: 'test',
-                    moveType
+                    moveType,
                 }, (err, data) => {
                     if (err) {
                         console.error('error creating game', err);
@@ -91,15 +78,10 @@ div#gameOffers
                     this.$store.commit('initGamesList', data.games);
                 });
             },
-            startGame(game) {
-                Connection.send('startGame', { userId: game.userId }, err => {
-                    if (err) console.error('error starting game', err);
-                });
-            },
             clearIntervalGameOffersUpdating() {
                 clearInterval(this.intervalGameOffersUpdating);
-            }
-        }
+            },
+        },
     };
 </script>
 

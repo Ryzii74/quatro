@@ -8,7 +8,7 @@ div
 
 <script>
     const Connection = require('../libs/connection');
-    const gameOffers = require('./gameOffers.vue');
+    const gameOffers = require('./gameOffers/gameOffers.vue');
 
     module.exports = {
         components: {
