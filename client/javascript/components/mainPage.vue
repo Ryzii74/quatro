@@ -15,13 +15,15 @@ div
             gameOffers
         },
         created() {
-            Connection.subscribe('socketsOnline', data => {
-                this.$store.commit('setPlayersOnline', data.count);
+            Connection.subscribe('socketsOnline', ({ count }) => {
+                this.playersOnline = count;
             });
         },
-        computed: Vuex.mapState({
-            playersOnline: state => state.main.playersOnline
-        }),
+        data() {
+            return {
+                playersOnline: 0,
+            };
+        },
         beforeRouteLeave(to, from, next) {
             this.$refs.gameOffers.clearIntervalGameOffersUpdating();
             next();
