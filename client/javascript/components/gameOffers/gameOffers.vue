@@ -56,8 +56,11 @@ div#gameOffers
                     this.games = games;
                 });
             },
+            isMyOffer(game) {
+                return game.userId === this.userId;
+            },
             isGameOfferCreated() {
-                return this.games.findIndex(this.isMyOffer) !== -1;
+                return this.games.indexOf(this.isMyOffer) !== -1;
             },
             createGame(moveType) {
                 Connection.send('createGameOffer', {
