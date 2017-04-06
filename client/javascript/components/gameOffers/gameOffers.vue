@@ -4,21 +4,19 @@ div#gameOffers
         :games="games",
         :removeMyOffer="removeMyOffer"
     )
-    a(
-        href="#",
-        @click.prevent="createGame('none')",
-        v-if="!isGameOfferCreated()"
-    ) Создать игру
-    a(
-        href="#",
-        @click.prevent="createGame('first')",
-        v-if="!isGameOfferCreated()"
-    ) Создать игру с первым ходом
-    a(
-        href="#",
-        @click.prevent="createGame('second')",
-        v-if="!isGameOfferCreated()"
-    ) Создать игру со вторым ходом
+    template(v-if="!isGameOfferCreated()")
+        a(
+            href="#",
+            @click.prevent="createGame('none')"
+        ) Создать игру
+        a(
+            href="#",
+            @click.prevent="createGame('first')"
+        ) Создать игру с первым ходом
+        a(
+            href="#",
+            @click.prevent="createGame('second')"
+        ) Создать игру со вторым ходом
 </template>
 
 <script>
@@ -51,7 +49,10 @@ div#gameOffers
         methods: {
             removeMyOffer() {
                 Connection.send('removeGameOffer', {}, (err, { games }) => {
-                    if (err) return;
+                    if (err) {
+                        console.error('error getting games list', err);
+                        return;
+                    }
                     this.games = games;
                 });
             },
@@ -72,13 +73,13 @@ div#gameOffers
                 });
             },
             getGames() {
-                Connection.send('getGameOffers', { type: 'test' }, (err, data) => {
+                Connection.send('getGameOffers', { type: 'test' }, (err, { games }) => {
                     if (err) {
                         console.error('error getting games list', err);
                         return;
                     }
 
-                    this.games = data.games;
+                    this.games = games;
                 });
             },
             clearIntervalGameOffersUpdating() {
