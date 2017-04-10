@@ -15,6 +15,14 @@ div
             gameOffers
         },
         created() {
+            Connection.send('getOnline', {}, (err, { count }) => {
+                if (err) {
+                    console.error('error getting start online count', err);
+                    return;
+                }
+
+                this.playersOnline = count;
+            });
             Connection.subscribe('socketsOnline', ({ count }) => {
                 this.playersOnline = count;
             });
