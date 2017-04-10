@@ -1,6 +1,4 @@
 module.exports = {
-    namespaced: true,
-
     state: {
         id: null,
         login: null,

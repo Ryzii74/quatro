@@ -1,8 +1,6 @@
 const SharedGame = require('../../../shared/game');
 
 module.exports = {
-    namespaced: true,
-
     state: {
         selectedMove: null,
         moves: null,
