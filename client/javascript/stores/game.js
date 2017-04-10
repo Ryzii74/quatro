@@ -52,7 +52,7 @@ module.exports = {
             const move = data.move;
             const fieldCell = data.fieldCell;
             state.field[fieldCell.x].splice(fieldCell.y, 1, state.moves[move.x][move.y]);
-            state.moves[move.x][move.y] = null;
+            state.moves[move.x].splice(move.y, 1, null);
             state.currentMove = state.players.find(id => state.currentMove !== id);
         },
 
